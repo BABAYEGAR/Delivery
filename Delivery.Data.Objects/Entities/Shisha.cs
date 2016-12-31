@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Delivery.Data.Objects.Entities
 {
-    public class Flavour
+    public class Shisha
     {
-        public  long FlavourId { get; set; }
+        public long ShishaId { get; set; }
         public string Name { get; set; }
         public IEnumerable<Delivery> Deliveries { get; set; }
+ 
     }
 }
