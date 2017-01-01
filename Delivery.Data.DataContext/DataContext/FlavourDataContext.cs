@@ -2,17 +2,17 @@
 
 namespace Delivery.Data.DataContext.DataContext
 {
-    public class DeliveryDataContext : DbContext
+    public class FlavourDataContext : DbContext
     {
-        public DeliveryDataContext() : base("name=DeliveryDb")
+        public FlavourDataContext() : base("name=DeliveryDb")
         {
             
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
-        public Objects.Entities.Delivery Deliver { get; set; }
-        public Objects.Entities.Shisha Shisha { get; set; }
+
         public Objects.Entities.Flavour Flavour { get; set; }
+        public Objects.Entities.Delivery Delivery { get; set; }
     }
 }

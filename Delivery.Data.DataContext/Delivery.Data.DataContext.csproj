@@ -49,12 +49,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\ShishaDataContext.cs" />
+    <Compile Include="DataContext\FlavourDataContext.cs" />
     <Compile Include="DataContext\DeliveryDataContext.cs" />
+    <Compile Include="Migrations\201701010024388_FirstMigration.cs" />
+    <Compile Include="Migrations\201701010024388_FirstMigration.Designer.cs">
+      <DependentUpon>201701010024388_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Delivery.Data.Objects\Delivery.Data.Objects.csproj">
+      <Project>{11D12FB2-B695-4077-BD29-C68C1ABCD4B0}</Project>
+      <Name>Delivery.Data.Objects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701010024388_FirstMigration.resx">
+      <DependentUpon>201701010024388_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

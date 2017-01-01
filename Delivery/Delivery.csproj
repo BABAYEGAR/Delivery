@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeliveryControllers\ShishasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -265,6 +266,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shishas\Create.cshtml" />
+    <Content Include="Views\Shishas\Delete.cshtml" />
+    <Content Include="Views\Shishas\Details.cshtml" />
+    <Content Include="Views\Shishas\Edit.cshtml" />
+    <Content Include="Views\Shishas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,6 +282,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Delivery.Data.DataContext\Delivery.Data.DataContext.csproj">
+      <Project>{a1212204-299e-48eb-81d8-e4358dddcb1a}</Project>
+      <Name>Delivery.Data.DataContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Delivery.Data.Objects\Delivery.Data.Objects.csproj">
+      <Project>{11d12fb2-b695-4077-bd29-c68c1abcd4b0}</Project>
+      <Name>Delivery.Data.Objects</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
