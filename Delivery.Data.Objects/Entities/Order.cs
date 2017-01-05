@@ -11,7 +11,6 @@ namespace Delivery.Data.Objects.Entities
     public class Order
     {
         public  long OrderId { get; set; }
-        [Required]
         public string Location { get; set; } 
         
         public long ShishaId { get; set; } 
@@ -23,12 +22,9 @@ namespace Delivery.Data.Objects.Entities
         [Required]
         public int Quantity { get; set; }
         [EmailAddress]
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string Name { get; set; }
         public DateTime DateOfOrder { get; set; }
-        [Required]
         public string Mobile { get; set; }
         public string OrderStatus { get; set; }
 

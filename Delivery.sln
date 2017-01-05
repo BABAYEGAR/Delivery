@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Data.Objects", "De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Data.DataContext", "Delivery.Data.DataContext\Delivery.Data.DataContext.csproj", "{A1212204-299E-48EB-81D8-E4358DDDCB1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delivery.Data.Service", "Delivery.Data.Service\Delivery.Data.Service.csproj", "{6C666566-B4FD-4A08-A024-7C2FA5301135}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A1212204-299E-48EB-81D8-E4358DDDCB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1212204-299E-48EB-81D8-E4358DDDCB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1212204-299E-48EB-81D8-E4358DDDCB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C666566-B4FD-4A08-A024-7C2FA5301135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C666566-B4FD-4A08-A024-7C2FA5301135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C666566-B4FD-4A08-A024-7C2FA5301135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C666566-B4FD-4A08-A024-7C2FA5301135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
+using Delivery.Data.Service.Enums;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
@@ -50,10 +51,12 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderId,Location,ShishaId,FlavourId,Quantity,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Order order)
+        public ActionResult Create([Bind(Include = "OrderId,Name,Email,Mobile,Location,ShishaId,FlavourId,Quantity")] Order order)
         {
             if (ModelState.IsValid)
             {
+                order.OrderStatus = OrderStatus.New.ToString();
+                order.DateOfOrder = DateTime.Now;
                 db.Orders.Add(order);
                 db.SaveChanges();
                 return RedirectToAction("Index");

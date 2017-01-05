@@ -1,92 +1,54 @@
 ﻿@model Delivery.Data.Objects.Entities.Order
-
 @{
+    Layout = "~/Views/Shared/_LayoutOrder.cshtml";
     ViewBag.Title = "Create";
 }
-
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new {@class = "form-inline"}))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Order</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <fieldset>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
+            <label for="first-name">Name:</label><br>
+            <input type="text" name="Name" class="first-name form-control" id="first-name">
+        </div>
+        <div class="form-group">
+            <label for="last-name">Location:</label><br>
+            <input type="text" name="Location" class="last-name form-control" id="last-name">
+        </div>
+        <div class="form-group">
+            <label for="height">Email:</label><br>
+            <input type="text" name="Email" class="height form-control" id="height">
+        </div>
+        <div class="form-group">
+            <label for="weight">Phone Number:</label><br>
+            <input type="text" name="Mobile" class="weight form-control" id="weight">
+        </div>
+        <div class="form-group">
+            <label for="first-name">Shisha:</label><br>
+            @Html.DropDownList("ShishaId", null, new {@class = "form-control", id = "first-name"})
+            @Html.ValidationMessageFor(model => model.ShishaId, "", new {@class = "text-danger"})
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderStatus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShishaId, "ShishaId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ShishaId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ShishaId, "", new { @class = "text-danger" })
-            </div>
+            <label for="first-name">Flavour:</label><br>
+            @Html.DropDownList("FlavourId", null, new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.FlavourId, "", new {@class = "text-danger"})
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FlavourId, "FlavourId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("FlavourId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.FlavourId, "", new { @class = "text-danger" })
-            </div>
+            <label for="first-name">Quantity:</label><br>
+            <input type="text" name="Quantity" class="first-name form-control" id="first-name">
+            @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
         </div>
+        <input type="submit" value="Save" class="btn btn-default" />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
+
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@
