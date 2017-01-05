@@ -196,6 +196,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DeliveryControllers\FlavoursController.cs" />
+    <Compile Include="Controllers\DeliveryControllers\OrdersController.cs" />
     <Compile Include="Controllers\DeliveryControllers\ShishasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -271,6 +273,16 @@
     <Content Include="Views\Shishas\Details.cshtml" />
     <Content Include="Views\Shishas\Edit.cshtml" />
     <Content Include="Views\Shishas\Index.cshtml" />
+    <Content Include="Views\Flavours\Create.cshtml" />
+    <Content Include="Views\Flavours\Delete.cshtml" />
+    <Content Include="Views\Flavours\Details.cshtml" />
+    <Content Include="Views\Flavours\Edit.cshtml" />
+    <Content Include="Views\Flavours\Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

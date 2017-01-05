@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Delivery.cs" />
+    <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Flavour.cs" />
     <Compile Include="Entities\Shisha.cs" />
     <Compile Include="Entities\Transport.cs" />

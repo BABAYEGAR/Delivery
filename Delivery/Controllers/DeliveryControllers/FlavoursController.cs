@@ -1,114 +1,118 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
-    public class ShishasController : Controller
+    public class FlavoursController : Controller
     {
-        private ShishaDataContext _db = new ShishaDataContext();
+        private FlavourDataContext db = new FlavourDataContext();
 
-        // GET: Shishas
+        // GET: Flavours
         public ActionResult Index()
         {
-            return View(_db.Shishas.ToList());
+            return View(db.Flavours.ToList());
         }
 
-        // GET: Shishas/Details/5
+        // GET: Flavours/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Shisha shisha = _db.Shishas.Find(id);
-            if (shisha == null)
+            Flavour flavour = db.Flavours.Find(id);
+            if (flavour == null)
             {
                 return HttpNotFound();
             }
-            return View(shisha);
+            return View(flavour);
         }
 
-        // GET: Shishas/Create
+        // GET: Flavours/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Shishas/Create
+        // POST: Flavours/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ShishaId,Name")] Shisha shisha)
+        public ActionResult Create([Bind(Include = "FlavourId,Name")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {
-                _db.Shishas.Add(shisha);
-                _db.SaveChanges();
+                db.Flavours.Add(flavour);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(shisha);
+            return View(flavour);
         }
 
-        // GET: Shishas/Edit/5
+        // GET: Flavours/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Shisha shisha = _db.Shishas.Find(id);
-            if (shisha == null)
+            Flavour flavour = db.Flavours.Find(id);
+            if (flavour == null)
             {
                 return HttpNotFound();
             }
-            return View(shisha);
+            return View(flavour);
         }
 
-        // POST: Shishas/Edit/5
+        // POST: Flavours/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShishaId,Name")] Shisha shisha)
+        public ActionResult Edit([Bind(Include = "FlavourId,Name")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(shisha).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(flavour).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(shisha);
+            return View(flavour);
         }
 
-        // GET: Shishas/Delete/5
+        // GET: Flavours/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Shisha shisha = _db.Shishas.Find(id);
-            if (shisha == null)
+            Flavour flavour = db.Flavours.Find(id);
+            if (flavour == null)
             {
                 return HttpNotFound();
             }
-            return View(shisha);
+            return View(flavour);
         }
 
-        // POST: Shishas/Delete/5
+        // POST: Flavours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Shisha shisha = _db.Shishas.Find(id);
-            _db.Shishas.Remove(shisha);
-            _db.SaveChanges();
+            Flavour flavour = db.Flavours.Find(id);
+            db.Flavours.Remove(flavour);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -116,7 +120,7 @@ namespace Delivery.Controllers.DeliveryControllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

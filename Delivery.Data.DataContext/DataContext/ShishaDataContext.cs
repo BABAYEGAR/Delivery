@@ -12,7 +12,7 @@ namespace Delivery.Data.DataContext.DataContext
         {
         }
         public Objects.Entities.Shisha Shisha { get; set; }
-        public Objects.Entities.Delivery Delivery { get; set; }
+        public Objects.Entities.Order Order { get; set; }
 
         public System.Data.Entity.DbSet<Delivery.Data.Objects.Entities.Shisha> Shishas { get; set; }
     }

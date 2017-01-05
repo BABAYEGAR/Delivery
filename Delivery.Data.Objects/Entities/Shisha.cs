@@ -10,7 +10,7 @@ namespace Delivery.Data.Objects.Entities
     {
         public long ShishaId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Delivery> Deliveries { get; set; }
+        public IEnumerable<Order> Order { get; set; }
  
     }
 }

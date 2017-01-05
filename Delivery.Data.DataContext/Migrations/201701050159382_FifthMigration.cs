@@ -3,7 +3,7 @@ namespace Delivery.Data.DataContext.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigration : DbMigration
+    public partial class FifthMigration : DbMigration
     {
         public override void Up()
         {
