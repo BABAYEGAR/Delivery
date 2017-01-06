@@ -352,6 +352,7 @@
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutOrder.cshtml" />
     <Content Include="Views\Shishas\StockManager.cshtml" />
+    <Content Include="Views\Flavours\StockManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

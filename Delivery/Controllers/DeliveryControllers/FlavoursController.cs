@@ -1,38 +1,80 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
+using Delivery.Data.Service.Enums;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
     public class FlavoursController : Controller
     {
-        private FlavourDataContext db = new FlavourDataContext();
+        private readonly FlavourDataContext _db = new FlavourDataContext();
 
         // GET: Flavours
         public ActionResult Index()
         {
-            return View(db.Flavours.ToList());
+            return View(_db.Flavours.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult StockManager(long id, string add, string remove)
+        {
+            var flavour = _db.Flavours.Find(id);
+            if (add != null)
+                ViewBag.Action = add;
+
+            if (remove != null)
+                ViewBag.Action = remove;
+            return View(flavour);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StockManager(
+            [Bind(Include = "FlavourId,Name,AvailableQuantity,SafetyStock")] Flavour flavour,
+            FormCollection collectedValues)
+        {
+            var quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
+            var quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
+            if (quantityRemoved < flavour.AvailableQuantity)
+            {
+                var action = collectedValues["action"];
+                var amount = 0;
+                if (action == StockAction.Add.ToString())
+                {
+                    flavour.AvailableQuantity = flavour.AvailableQuantity + quantityAdded;
+                    amount = quantityAdded;
+                }
+                if (action == StockAction.Remove.ToString())
+                {
+                    flavour.AvailableQuantity = flavour.AvailableQuantity - quantityRemoved;
+                    amount = quantityRemoved;
+                }
+
+                _db.Entry(flavour).State = EntityState.Modified;
+                _db.SaveChanges();
+                TempData["flavour"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
+                                      " successfully";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Index");
+            }
+            TempData["flavour"] = "This item is out of stock for the requested quantity!";
+            TempData["notificationtype"] = NotificationType.Danger.ToString();
+
+            return RedirectToAction("Index");
         }
 
         // GET: Flavours/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Flavour flavour = db.Flavours.Find(id);
+            var flavour = _db.Flavours.Find(id);
             if (flavour == null)
-            {
                 return HttpNotFound();
-            }
             return View(flavour);
         }
 
@@ -47,12 +89,14 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FlavourId,Name")] Flavour flavour)
+        public ActionResult Create([Bind(Include = "FlavourId,Name,AvailableQuantity,SafetyStock")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {
-                db.Flavours.Add(flavour);
-                db.SaveChanges();
+                _db.Flavours.Add(flavour);
+                _db.SaveChanges();
+                TempData["flavour"] = "You have successfully created a new item!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
@@ -63,14 +107,10 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Flavour flavour = db.Flavours.Find(id);
+            var flavour = _db.Flavours.Find(id);
             if (flavour == null)
-            {
                 return HttpNotFound();
-            }
             return View(flavour);
         }
 
@@ -79,12 +119,14 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FlavourId,Name")] Flavour flavour)
+        public ActionResult Edit([Bind(Include = "FlavourId,Name.AvailableQuantity,SafetyStock")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(flavour).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(flavour).State = EntityState.Modified;
+                _db.SaveChanges();
+                TempData["flavour"] = "You have successfully modified an item!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             return View(flavour);
@@ -94,34 +136,31 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Flavour flavour = db.Flavours.Find(id);
+            var flavour = _db.Flavours.Find(id);
             if (flavour == null)
-            {
                 return HttpNotFound();
-            }
             return View(flavour);
         }
 
         // POST: Flavours/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Flavour flavour = db.Flavours.Find(id);
-            db.Flavours.Remove(flavour);
-            db.SaveChanges();
+            var flavour = _db.Flavours.Find(id);
+            _db.Flavours.Remove(flavour);
+            _db.SaveChanges();
+            TempData["flavour"] = "You have successfully deleted an item!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                db.Dispose();
-            }
+                _db.Dispose();
             base.Dispose(disposing);
         }
     }

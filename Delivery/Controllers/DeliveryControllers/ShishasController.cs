@@ -42,18 +42,23 @@ namespace Delivery.Controllers.DeliveryControllers
             if (quantityRemoved < shisha.AvailableQuantity)
             {
                 string action = collectedValues["action"];
-            if (action == StockAction.Add.ToString())
+                int amount = 0;
+                if (action == StockAction.Add.ToString())
             {
                 shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
+                amount = quantityAdded;
             }
             if (action == StockAction.Remove.ToString())
             {
                 shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
+                amount = quantityRemoved;
             }
         
                 _db.Entry(shisha).State = EntityState.Modified;
                 _db.SaveChanges();
-                return View("Index");
+                TempData["shisha"] = "You have suucessfully "+action+"ed "+amount+ " stock item(s)"+ " successfully";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Index");
             }
             TempData["shisha"] = "This item is out of stock for the requested quantity!";
             TempData["notificationtype"] = NotificationType.Danger.ToString();
@@ -92,6 +97,8 @@ namespace Delivery.Controllers.DeliveryControllers
             {
                 _db.Shishas.Add(shisha);
                 _db.SaveChanges();
+                TempData["shisha"] = "You have added a new item successfully!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
@@ -124,6 +131,8 @@ namespace Delivery.Controllers.DeliveryControllers
             {
                 _db.Entry(shisha).State = EntityState.Modified;
                 _db.SaveChanges();
+                TempData["shisha"] = "You have modified an item successfully!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             return View(shisha);
@@ -152,6 +161,8 @@ namespace Delivery.Controllers.DeliveryControllers
             Shisha shisha = _db.Shishas.Find(id);
             _db.Shishas.Remove(shisha);
             _db.SaveChanges();
+            TempData["shisha"] = "You have deleted an item successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 
