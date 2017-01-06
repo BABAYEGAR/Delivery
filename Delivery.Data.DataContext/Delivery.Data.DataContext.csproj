@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\AppUserDataContext.cs" />
     <Compile Include="DataContext\ShishaDataContext.cs" />
     <Compile Include="DataContext\FlavourDataContext.cs" />
     <Compile Include="DataContext\OrderDataContext.cs" />
@@ -59,6 +60,10 @@
     <Compile Include="Migrations\201701060132229_FirstsMigration.cs" />
     <Compile Include="Migrations\201701060132229_FirstsMigration.Designer.cs">
       <DependentUpon>201701060132229_FirstsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701060319555_ThirdMigration.cs" />
+    <Compile Include="Migrations\201701060319555_ThirdMigration.Designer.cs">
+      <DependentUpon>201701060319555_ThirdMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701060132229_FirstsMigration.resx">
       <DependentUpon>201701060132229_FirstsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701060319555_ThirdMigration.resx">
+      <DependentUpon>201701060319555_ThirdMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

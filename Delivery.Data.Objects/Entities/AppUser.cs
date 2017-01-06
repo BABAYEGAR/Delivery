@@ -32,8 +32,6 @@ namespace Delivery.Data.Objects.Entities
 
         public string Password { get; set; }
         public string Role { get; set; }
-        public string AppUserImage { get; set; }
-
         public string DisplayName
             => Firstname + " " + Lastname;
     }

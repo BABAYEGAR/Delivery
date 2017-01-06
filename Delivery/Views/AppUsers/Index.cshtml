@@ -1,0 +1,90 @@
+﻿@using Delivery.Data.Service.Enums
+@model IEnumerable<Delivery.Data.Objects.Entities.AppUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2></h2>
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
+<h2></h2>
+@if (TempData["flavour"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable">@TempData["flavour"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable">@TempData["flavour"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable">@TempData["flavour"]</div>
+    }
+}
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+</p>
+<table class="table table-condensed" id="dataTable">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.AppUserId}, new {@class = "btn btn-xs btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.AppUserId}, new {@class = "btn btn-xs btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.AppUserId}, new {@class = "btn btn-xs btn-danger"})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#dataTable').DataTable();
+            });
+
+    </script>
+}

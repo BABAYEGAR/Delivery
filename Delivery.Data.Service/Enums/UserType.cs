@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Delivery.Data.Service.Enums
 {
-    public enum OrderStatus
+    public  enum  UserType
     {
-        New,
-        InProgress,
-        Delivered,
-        Cancelled
+        Administrator,
+        [Display(Name = "Delivery Man")]
+        DeliveryMan
     }
 }
