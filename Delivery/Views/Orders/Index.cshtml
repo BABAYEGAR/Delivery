@@ -1,11 +1,30 @@
-﻿@model IEnumerable<Delivery.Data.Objects.Entities.Order>
+﻿@using Delivery.Data.Service.Enums
+@model IEnumerable<Delivery.Data.Objects.Entities.Order>
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2></h2>
-
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+<h2></h2>
+@if (TempData["order"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable">@TempData["order"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable">@TempData["order"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable">@TempData["order"]</div>
+    }
+}
 <p>
     @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
 </p>
@@ -52,3 +71,14 @@
         }
     </tbody>
 </table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#dataTable').DataTable();
+            });
+
+    </script>
+}

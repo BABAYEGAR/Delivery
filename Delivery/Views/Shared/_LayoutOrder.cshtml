@@ -1,104 +1,43 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
-    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Content/assets/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/Content/assets/css/form-elements.css">
-    <link rel="stylesheet" href="~/Content/assets/css/style.css">
-    <link rel="stylesheet" href="~/Content/assets/css/media-queries.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- Favicon and touch icons -->
-    <link rel="shortcut icon" href="~/Content/assets/ico/favicon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="~/Content/assets/ico/apple-touch-icon-57-precomposed.png">
-
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("css", required: false)
+    <link href="~/Content/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 </head>
-
 <body>
-
-    <!-- Top menu -->
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="@Url.Action("Index","Home")">Shisha Order</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="top-navbar-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <span class="li-text">
-                            Follow us:
-                        </span>
-                        <span class="li-social">
-                            <a href="http://www.facebook.com/pages/Azmindcom/196582707093191" target="_blank"><i class="fa fa-facebook"></i></a>
-                            <a href="http://twitter.com/anli_zaimi" target="_blank"><i class="fa fa-twitter"></i></a>
-                            <a href="https://plus.google.com/101131425868807087570" target="_blank"><i class="fa fa-google-plus"></i></a>
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Description -->
-    <div class="description-container">
+<div class="container wrapper">
+    <div class="row cart-head">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 description-title">
-                    <h2>Place an order for shisha / flavour</h2>
+                <p></p>
+            </div>
+            <div class="row">
+                <div style="display: table; margin: auto;">
+                    <span class="step step_complete"> <a href="#" class="check-bc">Cart</a> <span class="step_line step_complete"> </span> <span class="step_line backline"> </span> </span>
+                    <span class="step step_complete"> <a href="#" class="check-bc">Checkout</a> <span class="step_line "> </span> <span class="step_line step_complete"> </span> </span>
+                    <span class="step_thankyou check-bc step_complete">Thank you</span>
                 </div>
+            </div>
+            <div class="row">
+                <p></p>
             </div>
         </div>
     </div>
-
-    <!-- Multi Step Form -->
-    <div class="msf-container">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 msf-form">
-
-                            @RenderBody()
-                 
-                </div>
-            </div>
-        </div>
+    <div class="row cart-body">
+        @RenderBody()
     </div>
 
+    <div class="row cart-footer">
 
-
-    <!-- Javascript -->
-    <script src="~/Content/assets/js/jquery-1.11.1.min.js"></script>
-    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Content/assets/js/jquery.backstretch.min.js"></script>
-    <script src="~/Content/assets/js/scripts.js"></script>
-
-    <!--[if lt IE 10]>
-        <script src="assets/js/placeholder.js"></script>
-    <![endif]-->
-
+    </div>
+</div>
 </body>
-
 </html>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)

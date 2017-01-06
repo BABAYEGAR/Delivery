@@ -53,10 +53,10 @@ namespace Delivery.Data.Service.EmailService
                     .Replace("FROM", "");
         }
         /// <summary>
-        ///     This method sends an email containing a username and password to a newly created user
+        /// This method sends an email for new orders
         /// </summary>
         /// <param name="order"></param>
-        public void UserDeleted(Order order)
+        public void NewOrder(Order order)
         {
             var message = new MailMessage
             {
@@ -64,10 +64,11 @@ namespace Delivery.Data.Service.EmailService
                 Subject = "New Order",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_UserDeleted(order),
+                Body = GetEmailBody_NewOrder(order),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
+            message.To.Add("");
             message.To.Add(order.Email);
             try
             {
@@ -84,13 +85,14 @@ namespace Delivery.Data.Service.EmailService
         /// </summary>
         /// <param name="order"></param>
         /// <returns></returns>
-        private static string GetEmailBody_UserDeleted(Order order)
+        private static string GetEmailBody_NewOrder(Order order)
         {
             
             return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/UserDeleted.html")).ReadToEnd()
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewOrder.html")).ReadToEnd()
                     .Replace("USERNAME", order.Email)
                     .Replace("URL", "http://10.10.15.77/bhuinfo/Account/Login")
+                    .Replace("Code", order.OrderCode)
                     .Replace("Date", DateTime.Now.ToShortDateString())
                     .Replace("Time", DateTime.Now.ToShortTimeString())
                     .Replace("FROM", "");

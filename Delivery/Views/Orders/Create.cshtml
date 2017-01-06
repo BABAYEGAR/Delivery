@@ -1,54 +1,165 @@
-﻿@model Delivery.Data.Objects.Entities.Order
+﻿@using Delivery.Data.Service.Enums
+@model Delivery.Data.Objects.Entities.Order
 @{
     Layout = "~/Views/Shared/_LayoutOrder.cshtml";
     ViewBag.Title = "Create";
 }
-@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new {@class = "form-inline"}))
-{
-    <fieldset>
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+@section css{
 
-        <div class="form-group">
-            <label for="first-name">Name:</label><br>
-            <input type="text" name="Name" class="first-name form-control" id="first-name">
-        </div>
-        <div class="form-group">
-            <label for="last-name">Location:</label><br>
-            <input type="text" name="Location" class="last-name form-control" id="last-name">
-        </div>
-        <div class="form-group">
-            <label for="height">Email:</label><br>
-            <input type="text" name="Email" class="height form-control" id="height">
-        </div>
-        <div class="form-group">
-            <label for="weight">Phone Number:</label><br>
-            <input type="text" name="Mobile" class="weight form-control" id="weight">
-        </div>
-        <div class="form-group">
-            <label for="first-name">Shisha:</label><br>
-            @Html.DropDownList("ShishaId", null, new {@class = "form-control", id = "first-name"})
-            @Html.ValidationMessageFor(model => model.ShishaId, "", new {@class = "text-danger"})
-        </div>
-
-        <div class="form-group">
-            <label for="first-name">Flavour:</label><br>
-            @Html.DropDownList("FlavourId", null, new {@class = "form-control"})
-            @Html.ValidationMessageFor(model => model.FlavourId, "", new {@class = "text-danger"})
-        </div>
-
-        <div class="form-group">
-            <label for="first-name">Quantity:</label><br>
-            <input type="text" name="Quantity" class="form-control" id="first-name">
-            @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
-        </div>
-        <input type="submit" value="Save" class="btn btn-default" />
-
-    </fieldset>
+    <link href="~/Content/CheckOut.css" rel="stylesheet"/>
+    <link href="~/Content/select2.min.css" rel="stylesheet"/>
 }
+<div class="container wrapper">
+    <div class="row cart-head">
+        <div class="container">
+            <div class="row">
+                <p></p>
+            </div>
+            <div class="row">
+                <div style="display: table; margin: auto;">
+                    <span class="step step_complete"> <a href="#" class="check-bc">Checkout</a> <span class="step_line "> </span> <span class="step_line step_complete"> </span> </span>
+                    <span class="step_thankyou check-bc step_complete">Thank you</span>
+                </div>
+            </div>
+            <div class="row">
+                <p></p>
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+        <div class="row cart-body center-block">
+            <form class="form-horizontal" method="post" action="">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+                    <!--Institution Data-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Order</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <h4>Order Data</h4>
+                                </div>
+                            </div>
 
 
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Full Name:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Location:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Location, new {htmlAttributes = new {@class = "form-control"}})
+                                </div>
+                            </div>
 
-@*@section Scripts {
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Contact Number:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Mobile, new {htmlAttributes = new {@class = "form-control"}})
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Email:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Available Item:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("Item", EnumHelper.GetSelectList(typeof(StockItem)), "select an item to order", new {@class = "form-control select-dropdown", id = "item"})
+                                </div>
+                            </div>
+                            <div class="form-group" id="shishaDiv">
+                                <div class="col-md-12">
+                                    <strong>Available Shisha:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("ShishaId", null, new {@class = "form-control select-dropdown"})
+                                    @Html.ValidationMessageFor(model => model.ShishaId, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group" id="flavourDiv">
+                                <div class="col-md-12">
+                                    <strong>Available Flavour:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("FlavourId", null, new {@class = "form-control select-dropdown"}) @Html.ValidationMessageFor(model => model.FlavourId, "", new {@class = "text-danger"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <strong>Quantity:</strong>
+                                </div>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "form-control"}})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="submit" value="Order" class="btn btn-primary btn-submit-fix" />
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+       
+    }
+</div>
+@section scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}*@
+    <script src="~/Scripts/select2.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+
+                // Init select2 for dropdown select
+                $('.select-dropdown').select2();
+                $("#shishaDiv").hide(0);
+                $("#flavourDiv").hide(0);
+                var item = $("#item");
+                item.change(function() {
+                    var sel = $(this).val(),
+                    shisha = $("#shishaDiv"),
+                    flavour = $("#flavourDiv");
+                    if (sel === "0") {
+                        flavour.hide(0);
+                        shisha.show(100);
+                    }
+                    else if (sel === "1") {
+                        shisha.hide(0);
+                        flavour.show(100);
+                    } else {
+                        shisha.hide(0);
+                        flavour.hide(0);
+                    }
+                });
+            });
+
+
+    </script>
+}

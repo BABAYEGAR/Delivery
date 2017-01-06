@@ -46,6 +46,7 @@
     <Compile Include="Enums\NotificationType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\StockAction.cs" />
+    <Compile Include="Enums\StockItem.cs" />
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
