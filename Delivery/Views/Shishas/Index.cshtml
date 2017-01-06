@@ -3,14 +3,33 @@
 
 @{
     ViewBag.Title = "Index";
+    ViewBag.add = StockAction.Add.ToString();
+    ViewBag.remove = StockAction.Remove.ToString();
 }
 
 <h2> </h2>
-
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+@if (TempData["shisha"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["shisha"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["shisha"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["shisha"]</div>
+    }
+}
 <p>
     @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
 </p>
-<table class="table table-condensed">
+<table class="table table-condensed" id="dataTable">
     <thead>
         <tr>
             <th>
@@ -49,8 +68,9 @@
                    
                 </td>
                 <td>
-                    @Html.ActionLink("Add Stock", "StockManager", new { id = item.ShishaId,action = StockAction.Add.ToString() }, new { @class = "btn btn-xs btn-primary" }) |
-                    @Html.ActionLink("Remove Stock", "StockManager", new { id = item.ShishaId, action = StockAction.Remove.ToString() }, new { @class = "btn btn-xs btn-danger" }) |
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("StockManager", new RouteValueDictionary(
+    new {id = item.ShishaId,ViewBag.add }))"> Add Stock</a>|
+                    @Html.ActionLink("Remove Stock", "StockManager", new { id = item.ShishaId,ViewBag.remove }, new { @class = "btn btn-xs btn-danger" }) |
                     @Html.ActionLink("Edit", "Edit", new { id = item.ShishaId }, new { @class = "btn btn-xs btn-primary" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.ShishaId }, new { @class = "btn btn-xs btn-danger" })
                 </td>
@@ -58,3 +78,14 @@
         }
     </tbody>
 </table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#dataTable').DataTable();
+            });
+
+    </script>
+}

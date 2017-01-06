@@ -19,19 +19,29 @@ namespace Delivery.Controllers.DeliveryControllers
             return View(_db.Shishas.ToList());
         }
         [HttpGet]
-        public ActionResult StockManager(long id,string action)
+        public ActionResult StockManager(long id,string add,string remove)
         {
             var shisha = _db.Shishas.Find(id);
-            ViewBag.Action = action;
+            if (add != null)
+            {
+                ViewBag.Action = add;
+            }
+
+            if (remove != null)
+            {
+                ViewBag.Action = remove;
+            }
             return View(shisha);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StockManager([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha,FormCollection collectedValues)
         {
-            int quantityAdded = Convert.ToInt32(collectedValues["Add"]);
-            int quantityRemoved = Convert.ToInt32(collectedValues["Remove"]);
-            string action = ViewBag.Action;
+            int quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
+            int quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
+            if (quantityRemoved < shisha.AvailableQuantity)
+            {
+                string action = collectedValues["action"];
             if (action == StockAction.Add.ToString())
             {
                 shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
@@ -40,8 +50,14 @@ namespace Delivery.Controllers.DeliveryControllers
             {
                 shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
             }
-            _db.Entry(shisha).State = EntityState.Modified;
-            _db.SaveChanges();
+        
+                _db.Entry(shisha).State = EntityState.Modified;
+                _db.SaveChanges();
+                return View("Index");
+            }
+            TempData["shisha"] = "This item is out of stock for the requested quantity!";
+            TempData["notificationtype"] = NotificationType.Danger.ToString();
+
             return RedirectToAction("Index");
         }
         // GET: Shishas/Details/5
