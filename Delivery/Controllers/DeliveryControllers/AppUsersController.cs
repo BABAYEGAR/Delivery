@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
+using Delivery.Data.Service.Enums;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
@@ -48,13 +49,16 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile,Role")] AppUser appUser)
+        public ActionResult Create([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile")] AppUser appUser,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
                 appUser.Password = Membership.GeneratePassword(6,0);
+                appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
                 db.AppUsers.Add(appUser);
                 db.SaveChanges();
+                TempData["user"] = "A new user has been successfully created!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
@@ -81,12 +85,15 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile,Password,Role")] AppUser appUser)
+        public ActionResult Edit([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile,Password")] AppUser appUser,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
                 db.Entry(appUser).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["user"] = "The user has been successfully Modified!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             return View(appUser);
@@ -115,6 +122,8 @@ namespace Delivery.Controllers.DeliveryControllers
             AppUser appUser = db.AppUsers.Find(id);
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
+            TempData["user"] = "The user has been successfully deleted!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 
