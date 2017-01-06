@@ -10,6 +10,7 @@ namespace Delivery.Data.Objects.Entities
 {
     public class Order
     {
+        [Key]
         public  long OrderId { get; set; }
         public string Location { get; set; } 
         
@@ -27,6 +28,7 @@ namespace Delivery.Data.Objects.Entities
         public DateTime DateOfOrder { get; set; }
         public string Mobile { get; set; }
         public string OrderStatus { get; set; }
+        public string OrderCode { get; set; }
 
 
     }

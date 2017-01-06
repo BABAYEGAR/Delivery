@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Delivery.Data.Objects.Entities;
 
 namespace Delivery.Data.DataContext.DataContext
 {
@@ -12,9 +13,10 @@ namespace Delivery.Data.DataContext.DataContext
         {
         }
 
-        public Objects.Entities.Flavour Flavour { get; set; }
-        public Objects.Entities.Order Order { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
-        public System.Data.Entity.DbSet<Delivery.Data.Objects.Entities.Flavour> Flavours { get; set; }
+        public DbSet<Flavour> Flavours { get; set; }
+
+        public DbSet<Shisha> Shishas { get; set; }
     }
 }

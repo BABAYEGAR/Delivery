@@ -15,7 +15,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayName("Purchase Flag")
+            </th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -26,8 +29,11 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
+                    <i class="fa fa-flag-o"></i>
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.FlavourId }, new { @class = "btn btn-primary" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.FlavourId }, new { @class = "btn btn-default" }) |
+                    @Html.ActionLink("Manage", "Details", new { id = item.FlavourId }, new { @class = "btn btn-default" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.FlavourId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>

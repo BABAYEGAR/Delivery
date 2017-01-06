@@ -1,9 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
+using Delivery.Data.Service.Enums;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
@@ -16,7 +18,32 @@ namespace Delivery.Controllers.DeliveryControllers
         {
             return View(_db.Shishas.ToList());
         }
-
+        [HttpGet]
+        public ActionResult StockManager(long id,string action)
+        {
+            var shisha = _db.Shishas.Find(id);
+            ViewBag.Action = action;
+            return View(shisha);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StockManager([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha,FormCollection collectedValues)
+        {
+            int quantityAdded = Convert.ToInt32(collectedValues["Add"]);
+            int quantityRemoved = Convert.ToInt32(collectedValues["Remove"]);
+            string action = ViewBag.Action;
+            if (action == StockAction.Add.ToString())
+            {
+                shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
+            }
+            if (action == StockAction.Remove.ToString())
+            {
+                shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
+            }
+            _db.Entry(shisha).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Shishas/Details/5
         public ActionResult Details(long? id)
         {
@@ -43,7 +70,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ShishaId,Name")] Shisha shisha)
+        public ActionResult Create([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +102,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShishaId,Name")] Shisha shisha)
+        public ActionResult Edit([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha)
         {
             if (ModelState.IsValid)
             {

@@ -7,13 +7,13 @@ namespace Delivery.Data.DataContext.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class SixththMigration1 : IMigrationMetadata
+    public sealed partial class FirstsMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SixththMigration1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstsMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701050225353_SixththMigration1"; }
+            get { return "201701060132229_FirstsMigration"; }
         }
         
         string IMigrationMetadata.Source

@@ -52,29 +52,13 @@
     <Compile Include="DataContext\ShishaDataContext.cs" />
     <Compile Include="DataContext\FlavourDataContext.cs" />
     <Compile Include="DataContext\OrderDataContext.cs" />
-    <Compile Include="Migrations\201701050159382_FifthMigration.cs" />
-    <Compile Include="Migrations\201701050159382_FifthMigration.Designer.cs">
-      <DependentUpon>201701050159382_FifthMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201701060132027_FirstMigration.cs" />
+    <Compile Include="Migrations\201701060132027_FirstMigration.Designer.cs">
+      <DependentUpon>201701060132027_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701050202091_SixththMigration.cs" />
-    <Compile Include="Migrations\201701050202091_SixththMigration.Designer.cs">
-      <DependentUpon>201701050202091_SixththMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701050225353_SixththMigration1.cs" />
-    <Compile Include="Migrations\201701050225353_SixththMigration1.Designer.cs">
-      <DependentUpon>201701050225353_SixththMigration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701050228581_SeventhMigration.cs" />
-    <Compile Include="Migrations\201701050228581_SeventhMigration.Designer.cs">
-      <DependentUpon>201701050228581_SeventhMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701050235252_EightthMigration.cs" />
-    <Compile Include="Migrations\201701050235252_EightthMigration.Designer.cs">
-      <DependentUpon>201701050235252_EightthMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701050430432_NinthMigration.cs" />
-    <Compile Include="Migrations\201701050430432_NinthMigration.Designer.cs">
-      <DependentUpon>201701050430432_NinthMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201701060132229_FirstsMigration.cs" />
+    <Compile Include="Migrations\201701060132229_FirstsMigration.Designer.cs">
+      <DependentUpon>201701060132229_FirstsMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,23 +74,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701050159382_FifthMigration.resx">
-      <DependentUpon>201701050159382_FifthMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701060132027_FirstMigration.resx">
+      <DependentUpon>201701060132027_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701050202091_SixththMigration.resx">
-      <DependentUpon>201701050202091_SixththMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701050225353_SixththMigration1.resx">
-      <DependentUpon>201701050225353_SixththMigration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701050228581_SeventhMigration.resx">
-      <DependentUpon>201701050228581_SeventhMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701050235252_EightthMigration.resx">
-      <DependentUpon>201701050235252_EightthMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701050430432_NinthMigration.resx">
-      <DependentUpon>201701050430432_NinthMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701060132229_FirstsMigration.resx">
+      <DependentUpon>201701060132229_FirstsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

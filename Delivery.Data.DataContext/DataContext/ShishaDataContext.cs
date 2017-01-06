@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Delivery.Data.Objects.Entities;
 
 namespace Delivery.Data.DataContext.DataContext
 {
@@ -11,9 +12,11 @@ namespace Delivery.Data.DataContext.DataContext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
-        public Objects.Entities.Shisha Shisha { get; set; }
-        public Objects.Entities.Order Order { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
-        public System.Data.Entity.DbSet<Delivery.Data.Objects.Entities.Shisha> Shishas { get; set; }
+        public DbSet<Flavour> Flavours { get; set; }
+
+        public DbSet<Shisha> Shishas { get; set; }
+
     }
 }
