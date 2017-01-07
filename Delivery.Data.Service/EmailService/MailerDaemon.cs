@@ -90,8 +90,10 @@ namespace Delivery.Data.Service.EmailService
             
             return
                 new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewOrder.html")).ReadToEnd()
-                    .Replace("USERNAME", order.Name)
+                    .Replace("DISPLAYNAME", order.Name)
                     .Replace("CODE", order.OrderCode)
+                    .Replace("CONTACT1", order.Mobile)
+                    .Replace("CONTACT2", order.Email)
                     .Replace("FROM", "support@shisha.com");
         }
         

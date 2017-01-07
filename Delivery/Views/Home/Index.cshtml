@@ -1,4 +1,5 @@
 ﻿@using Delivery.Data.DataContext.DataContext
+@using Delivery.Data.Objects.Entities
 @using Delivery.Data.Service.Enums
 @{
     ViewBag.Title = "Home";
@@ -7,6 +8,8 @@
     var db = new ShishaDataContext();
     var shisha = db.Shishas.ToList();
     var shishaWithImages = shisha.Where(n => n.Image != null);
+
+    var loggedinuser = Session["shishaloggedinuser"] as AppUser;
 }
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -30,9 +33,32 @@
                 <li>
                     <a class="page-scroll" href="#contact">Contact</a>
                 </li>
-                <li>
-                    <a href="@Url.Action("Login","Account")">Login</a>
-                </li>
+                @if (loggedinuser != null)
+                {
+                    if (loggedinuser.Role == UserType.Administrator.ToString())
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "AppUsers")">Dashboard</a>
+                        </li>
+                    }
+                    if (loggedinuser.Role == UserType.DeliveryMan.ToString())
+                    {
+                        <li>
+                            <a href="@Url.Action("Index", "Orders")">Dashboard</a>
+                        </li>
+                    }
+                    <li>
+                        <a href="@Url.Action("Login","Account")">Log-Out</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action("Login","Account")">Login</a>
+                    </li>
+
+                }
+             
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -58,10 +84,10 @@
             }
         }
         <div class="header-content-inner">
-            <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
+            <h1 id="homeHeading">Order your wonderful shisha pots and shisha flavours</h1>
             <hr>
-            <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-            <a href="@Url.Action("Create", "Orders")" class="btn btn-primary btn-xl page-scroll">Order</a>
+            <p>Order shisha makes you realise your dreams, order your shisha to your doorstep</p>
+            <a href="@Url.Action("Create", "Orders")" class="btn btn-default btn-xl page-scroll">Order</a>
 
         </div>
     </div>

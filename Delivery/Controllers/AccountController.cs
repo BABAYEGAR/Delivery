@@ -70,7 +70,7 @@ namespace Delivery.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model,string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -83,18 +83,22 @@ namespace Delivery.Controllers
                 Session["shishaloggedinuser"] = appuser;
                 if (appuser.Role == UserType.Administrator.ToString())
                 {
-                    RedirectToAction("Index", "AppUsers");
+                   return RedirectToAction("Index", "AppUsers");
                 }
                 if (appuser.Role == UserType.DeliveryMan.ToString())
                 {
-                    RedirectToAction("Index", "Orders");
+                   return RedirectToAction("Index", "Orders");
                 }
             }
-            TempData["login"] = "Invalid login credentials,Check your details and tru again!";
-            TempData["notificationtype"] = NotificationType.Danger.ToString();
+            else
+            {
+                TempData["login"] = "Invalid login credentials,Check your details and try again!";
+                TempData["notificationtype"] = NotificationType.Danger.ToString();
+                return View(model);
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -108,6 +112,8 @@ namespace Delivery.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+
+            return View(model);
         }
 
         //

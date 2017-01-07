@@ -135,7 +135,7 @@ namespace Delivery.Controllers.DeliveryControllers
                 order.DateOfOrder = DateTime.Now;
                 var rnd = new Random();
                 var randomNumber = rnd.Next(1, 9);
-                order.OrderStatus = "SO " + randomNumber;
+                order.OrderCode = "SO " + randomNumber;
                 db.Orders.Add(order);
                 db.SaveChanges();
                 TempData["order"] = "You have successfully placed an order and it will be attented to soonest!";

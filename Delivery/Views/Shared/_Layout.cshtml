@@ -31,13 +31,13 @@
                 @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
                 {
                     <li>@Html.ActionLink("Users", "Index", "AppUsers")</li>
-                    <li>@Html.ActionLink("Orsers", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                     <li>@Html.ActionLink("Shisha", "Index", "Shishas")</li>
                     <li>@Html.ActionLink("Flavour", "Index", "Flavours")</li>
                 }
                 @if ((loggedinuser != null) && (loggedinuser.Role == UserType.DeliveryMan.ToString()))
                 {
-                    <li>@Html.ActionLink("Orsers", "Index", "Orders")</li>
+                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
                 }
             </ul>
             @Html.Partial("_LoginPartial")
