@@ -87,8 +87,8 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.ActionLink("Activate Delivery", "Edit", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
-                    @Html.ActionLink("Mark as Delivered", "Edit", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
+                    @Html.ActionLink("Activate Delivery", "ChangeStatusToProgress", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
+                    @Html.ActionLink("Mark as Delivered", "ChangeStatusToDelivered", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
                     @Html.ActionLink("Details", "Details", new {id = item.OrderId}, new {@class = "btn btn-xs btn-warning"}) |
                     @Html.ActionLink("Delete", "Delete", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
                 </td>
