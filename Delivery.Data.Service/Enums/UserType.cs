@@ -11,6 +11,9 @@ namespace Delivery.Data.Service.Enums
     {
         Administrator,
         [Display(Name = "Delivery Man")]
-        DeliveryMan
+        DeliveryMan,
+        [Display(Name = "Procurement Officer")]
+        ProcurementOfficer,
+        User
     }
 }

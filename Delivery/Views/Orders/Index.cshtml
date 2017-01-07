@@ -1,15 +1,16 @@
-﻿@using Delivery.Data.Service.Enums
+﻿@using Delivery.Data.Objects.Entities
+@using Delivery.Data.Service.Enums
 @model IEnumerable<Delivery.Data.Objects.Entities.Order>
 
 @{
+    Layout = "../Shared/_LayoutTables.cshtml";
     ViewBag.Title = "Index";
+    ViewBag.Header = "Order";
+    ViewBag.Subtitle = "List of placed orders";
 }
-
-<h2></h2>
-@section css{
-    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+@{
+    var loggedinuser = Session["shishaloggedinuser"] as AppUser;
 }
-<h2></h2>
 @if (TempData["order"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -25,10 +26,7 @@
         <div class="alert alert-info alert-dismissable">@TempData["order"]</div>
     }
 }
-<p>
-    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
-</p>
-<table class="table table-condensed" id="dataTable">
+<table class="table table-condensed" id="dataTables-example">
     <thead>
     <tr>
         <th>
@@ -39,12 +37,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Shisha.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Mobile)
@@ -62,54 +54,50 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Flavour.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Shisha.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mobile)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderStatus)
-                </td>
-                <td>
-                    @Html.ActionLink("Activate Delivery", "ChangeStatusToProgress", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
-                    @Html.ActionLink("Mark as Delivered", "ChangeStatusToDelivered", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
-                    @Html.ActionLink("Details", "Details", new {id = item.OrderId}, new {@class = "btn btn-xs btn-warning"}) |
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Flavour.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shisha.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatus)
+            </td>
+            <td>
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.DeliveryMan.ToString()) && item.OrderStatus == OrderStatus.New.ToString())
+                {
+                    @Html.ActionLink("Activate Delivery", "ChangeStatusToProgress", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"})
+                }
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.DeliveryMan.ToString()) && item.OrderStatus == OrderStatus.InProgress.ToString())
+                {
+                    @Html.ActionLink("Mark as Delivered", "ChangeStatusToDelivered", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"})
+                }
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.User.ToString()) && item.OrderStatus == OrderStatus.InProgress.ToString())
+                {
+                    @Html.ActionLink("Cancel Order", "ChangeStatusToCancelled", new { id = item.OrderId }, new { @class = "btn btn-xs btn-danger" })
+                }
+                @Html.ActionLink("Details", "Details", new {id = item.OrderId}, new {@class = "btn btn-xs btn-warning"})
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.DeliveryMan.ToString()))
+                {
                     @Html.ActionLink("Delete", "Delete", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
-                </td>
-            </tr>
-        }
+                }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
-@section scripts {
-
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document)
-            .ready(function() {
-                $('#dataTable').DataTable();
-            });
-
-    </script>
-}

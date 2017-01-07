@@ -2,14 +2,13 @@
 @model IEnumerable<Delivery.Data.Objects.Entities.Flavour>
 
 @{
+    Layout = "../Shared/_LayoutTables.cshtml";
     ViewBag.Title = "Index";
+    ViewBag.Header = "Flavour";
+    ViewBag.Subtitle = "List of shisha flavours";
     ViewBag.add = StockAction.Add.ToString();
     ViewBag.remove = StockAction.Remove.ToString();
 }
-@section css{
-    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
-}
-<h2></h2>
 @if (TempData["flavour"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -25,10 +24,7 @@
         <div class="alert alert-info alert-dismissable">@TempData["flavour"]</div>
     }
 }
-<p>
-    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
-</p>
-<table class="table table-condensed" id="dataTable">
+<table class="table table-condensed" id="dataTables-example">
     <thead>
     <tr>
         <th>
@@ -78,14 +74,3 @@
     }
     </tbody>
 </table>
-@section scripts {
-
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document)
-            .ready(function() {
-                $('#dataTable').DataTable();
-            });
-
-    </script>
-}
