@@ -5,6 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Delivery.Data.DataContext.DataContext;
+using Delivery.Data.Service.Encryption;
+using Delivery.Data.Service.Enums;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,6 +20,7 @@ namespace Delivery.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private AppUserDataContext db = new AppUserDataContext();
 
         public AccountController()
         {
@@ -72,7 +76,22 @@ namespace Delivery.Controllers
             {
                 return View(model);
             }
-
+            var password = new Md5Ecryption().ConvertStringToMd5Hash(model.Password);
+            var appuser = db.AppUsers.SingleOrDefault(n => n.Email == model.Email && n.Password == password);
+            if (appuser != null)
+            {
+                Session["shishaloggedinuser"] = appuser;
+                if (appuser.Role == UserType.Administrator.ToString())
+                {
+                    RedirectToAction("Index", "AppUsers");
+                }
+                if (appuser.Role == UserType.DeliveryMan.ToString())
+                {
+                    RedirectToAction("Index", "Orders");
+                }
+            }
+            TempData["login"] = "Invalid login credentials,Check your details and tru again!";
+            TempData["notificationtype"] = NotificationType.Danger.ToString();
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);

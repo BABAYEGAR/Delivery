@@ -277,6 +277,10 @@
     <Content Include="Content\LandingPage\vendor\scrollreveal\scrollreveal.js" />
     <Content Include="Content\LandingPage\vendor\scrollreveal\scrollreveal.min.js" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="EmailTemplates\ContactUs.html" />
+    <Content Include="EmailTemplates\NewUserCreated.html" />
+    <Content Include="EmailTemplates\ResetPassword.html" />
+    <Content Include="EmailTemplates\NewOrder.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

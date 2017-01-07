@@ -2,10 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
 using Delivery.Data.Service.Enums;
+using Delivery.Data.Service.FileUploader;
 
 namespace Delivery.Controllers.DeliveryControllers
 {
@@ -39,30 +41,33 @@ namespace Delivery.Controllers.DeliveryControllers
         {
             int quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
             int quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
-            if (quantityRemoved < shisha.AvailableQuantity)
-            {
-                string action = collectedValues["action"];
-                int amount = 0;
-                if (action == StockAction.Add.ToString())
-            {
-                shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
-                amount = quantityAdded;
-            }
-            if (action == StockAction.Remove.ToString())
-            {
-                shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
-                amount = quantityRemoved;
-            }
-        
-                _db.Entry(shisha).State = EntityState.Modified;
-                _db.SaveChanges();
-                TempData["shisha"] = "You have suucessfully "+action+"ed "+amount+ " stock item(s)"+ " successfully";
-                TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
-            }
-            TempData["shisha"] = "This item is out of stock for the requested quantity!";
-            TempData["notificationtype"] = NotificationType.Danger.ToString();
+            HttpPostedFileBase image = Request.Files["image"];
+                if (quantityRemoved < shisha.AvailableQuantity)
+                {
+                    shisha.Image = image != null && image.FileName != "" ? new FileUploader().UploadFile(image, UploadType.Shisha) : null;
+                    string action = collectedValues["action"];
+                    int amount = 0;
+                    if (action == StockAction.Add.ToString())
+                    {
+                        shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
+                        amount = quantityAdded;
+                    }
+                    if (action == StockAction.Remove.ToString())
+                    {
+                        shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
+                        amount = quantityRemoved;
+                    }
 
+                    _db.Entry(shisha).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    TempData["shisha"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
+                                         " successfully";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("Index");
+                }
+                TempData["shisha"] = "This item is out of stock for the requested quantity!";
+                TempData["notificationtype"] = NotificationType.Danger.ToString();
+            
             return RedirectToAction("Index");
         }
         // GET: Shishas/Details/5

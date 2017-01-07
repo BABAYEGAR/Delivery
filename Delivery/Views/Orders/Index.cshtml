@@ -32,6 +32,9 @@
     <thead>
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Flavour.Name)
         </th>
         <th>
@@ -39,6 +42,15 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderCode)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -51,6 +63,9 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Flavour.Name)
                 </td>
                 <td>
@@ -60,12 +75,22 @@
                     @Html.DisplayFor(modelItem => item.Location)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCode)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }, new { @class = "btn btn-primary" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.OrderId }, new { @class = "btn btn-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Activate Delivery", "Edit", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
+                    @Html.ActionLink("Mark as Delivered", "Edit", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.OrderId}, new {@class = "btn btn-xs btn-warning"}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
                 </td>
             </tr>
         }

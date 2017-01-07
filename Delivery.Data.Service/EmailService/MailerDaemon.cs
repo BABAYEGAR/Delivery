@@ -60,15 +60,15 @@ namespace Delivery.Data.Service.EmailService
         {
             var message = new MailMessage
             {
-                From = new MailAddress(""),
-                Subject = "New Order",
+                From = new MailAddress("salxsaa@gmail.com"),
+                Subject = "Order Confirmation",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
                 Body = GetEmailBody_NewOrder(order),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
-            message.To.Add("");
+            message.To.Add("salxsaa@gmail.com");
             message.To.Add(order.Email);
             try
             {
@@ -90,12 +90,9 @@ namespace Delivery.Data.Service.EmailService
             
             return
                 new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewOrder.html")).ReadToEnd()
-                    .Replace("USERNAME", order.Email)
-                    .Replace("URL", "http://10.10.15.77/bhuinfo/Account/Login")
-                    .Replace("Code", order.OrderCode)
-                    .Replace("Date", DateTime.Now.ToShortDateString())
-                    .Replace("Time", DateTime.Now.ToShortTimeString())
-                    .Replace("FROM", "");
+                    .Replace("USERNAME", order.Name)
+                    .Replace("CODE", order.OrderCode)
+                    .Replace("FROM", "support@shisha.com");
         }
         
     }

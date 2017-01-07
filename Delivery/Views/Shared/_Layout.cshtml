@@ -1,45 +1,59 @@
-﻿<!DOCTYPE html>
+﻿@using Delivery.Data.Objects.Entities
+@using Delivery.Data.Service.Enums
+@{
+    var loggedinuser = Session["shishaloggedinuser"] as AppUser;
+}
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("css", required: false)
-    <link href="~/Content/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    @RenderSection("css", false)
+    <link href="~/Content/assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Shisha Order", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Shisha Order", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                {
+                    <li>@Html.ActionLink("Users", "Index", "AppUsers")</li>
+                    <li>@Html.ActionLink("Orsers", "Index", "Orders")</li>
                     <li>@Html.ActionLink("Shisha", "Index", "Shishas")</li>
                     <li>@Html.ActionLink("Flavour", "Index", "Flavours")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                }
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.DeliveryMan.ToString()))
+                {
+                    <li>@Html.ActionLink("Orsers", "Index", "Orders")</li>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>@DateTime.Now.Year - Shisha Order</p>
-        </footer>
-    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>@DateTime.Now.Year - Shisha Order</p>
+    </footer>
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
 </body>
 </html>

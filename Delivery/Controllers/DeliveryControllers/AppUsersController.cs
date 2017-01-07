@@ -51,10 +51,18 @@ namespace Delivery.Controllers.DeliveryControllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile")] AppUser appUser,FormCollection collectedValues)
         {
+            var allUsers = db.AppUsers.ToList();
+            var userExist = allUsers.FirstOrDefault(n => n.Email == collectedValues["Email"]);
             if (ModelState.IsValid)
             {
                 appUser.Password = Membership.GeneratePassword(6,0);
                 appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
+                if (userExist != null)
+                {
+                    TempData["user"] = "A user with this email exist,Try a different one!";
+                    TempData["notificationtype"] = NotificationType.Danger.ToString();
+                    return View(appUser);
+                }
                 db.AppUsers.Add(appUser);
                 db.SaveChanges();
                 TempData["user"] = "A new user has been successfully created!";

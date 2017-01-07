@@ -13,6 +13,7 @@ namespace Delivery.Data.Objects.Entities
         public int AvailableQuantity { get; set; }
         [DisplayName("Safety Stock")]
         public int SafetyStock { get; set; }
+        public string Image { get; set; }
         public IEnumerable<Order> Order { get; set; }
  
     }
