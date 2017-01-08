@@ -33,7 +33,8 @@ namespace Delivery.Data.Objects.Entities
         public string Mobile { get; set; }
         public string OrderStatus { get; set; }
         public string OrderCode { get; set; }
-
+        [Required]
+        public string TotalAmount { get; set; }
 
     }
 }

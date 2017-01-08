@@ -1,26 +1,39 @@
 ﻿@model Delivery.Data.Objects.Entities.Shisha
-
 @{
-    ViewBag.Title = "Details";
+    Layout = "../Shared/_LayoutForms.cshtml";
+    ViewBag.Title = "Delete";
+    ViewBag.Header = "Shisha";
+    ViewBag.Subtitle = "Delete shisha pot";
 }
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.AvailableQuantity)
+    </dt>
 
-<h2>Details</h2>
+    <dd>
+        @Html.DisplayFor(model => model.AvailableQuantity)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.SafetyStock)
+    </dt>
 
-<div>
-    <h4>Shisha</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SafetyStock)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.UnitAmount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-    </dl>
-</div>
+    <dd>
+        @Html.DisplayFor(model => model.UnitAmount)
+    </dd>
+</dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ShishaId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ShishaId },new {@class = "btn btn-primary"})
 </p>

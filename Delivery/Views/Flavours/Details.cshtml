@@ -1,14 +1,10 @@
 ﻿@model Delivery.Data.Objects.Entities.Flavour
-
 @{
+    Layout = "../Shared/_LayoutForms.cshtml";
     ViewBag.Title = "Details";
+    ViewBag.Header = "Shisha Flavour";
+    ViewBag.Subtitle = "Details of shisha flavour";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Flavour</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,10 +13,30 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailableQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailableQuantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SafetyStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SafetyStock)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitAmount)
+        </dd>
+
 
     </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FlavourId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FlavourId },new {@class = "btn btn-default"})
 </p>

@@ -83,7 +83,7 @@ namespace Delivery.Controllers
                 Session["shishaloggedinuser"] = appuser;
                 if (appuser.Role == UserType.Administrator.ToString())
                 {
-                   return RedirectToAction("Index", "AppUsers");
+                   return RedirectToAction("AdminHome", "Home");
                 }
                 if (appuser.Role == UserType.DeliveryMan.ToString())
                 {
