@@ -6,7 +6,8 @@
  * Made by Osman Nuri Okumus
  * Under MIT License
  */
-;(function($, window, document, undefined) {
+;
+(function($, window, document, undefined) {
 
     var pluginName = "metisMenu",
         defaults = {
@@ -42,27 +43,33 @@
                 $this.find("li.active").has("ul").children("a").addClass("doubleTapToGo");
             }
 
-            $this.find("li").has("ul").children("a").on("click" + "." + pluginName, function(e) {
-                e.preventDefault();
+            $this.find("li")
+                .has("ul")
+                .children("a")
+                .on("click" + "." + pluginName,
+                    function(e) {
+                        e.preventDefault();
 
-                //Do we need to enable the double tap
-                if (obj.settings.doubleTapToGo) {
+                        //Do we need to enable the double tap
+                        if (obj.settings.doubleTapToGo) {
 
-                    //if we hit a second time on the link and the href is valid, navigate to that url
-                    if (obj.doubleTapToGo($(this)) && $(this).attr("href") !== "#" && $(this).attr("href") !== "") {
-                        e.stopPropagation();
-                        document.location = $(this).attr("href");
-                        return;
-                    }
-                }
+                            //if we hit a second time on the link and the href is valid, navigate to that url
+                            if (obj.doubleTapToGo($(this)) &&
+                                $(this).attr("href") !== "#" &&
+                                $(this).attr("href") !== "") {
+                                e.stopPropagation();
+                                document.location = $(this).attr("href");
+                                return;
+                            }
+                        }
 
-                $(this).parent("li").toggleClass("active").children("ul").collapse("toggle");
+                        $(this).parent("li").toggleClass("active").children("ul").collapse("toggle");
 
-                if ($toggle) {
-                    $(this).parent("li").siblings().removeClass("active").children("ul.in").collapse("hide");
-                }
+                        if ($toggle) {
+                            $(this).parent("li").siblings().removeClass("active").children("ul.in").collapse("hide");
+                        }
 
-            });
+                    });
         },
 
         isIE: function() { //https://gist.github.com/padolsey/527683
@@ -91,7 +98,7 @@
 
             //does not exists, add a new class and return false
             if (elem.parent().children("ul").length) {
-                 //first remove all other class
+                //first remove all other class
                 $this.find(".doubleTapToGo").removeClass("doubleTapToGo");
                 //add the class on the current element
                 elem.addClass("doubleTapToGo");
@@ -107,7 +114,7 @@
     };
 
     $.fn[pluginName] = function(options) {
-        this.each(function () {
+        this.each(function() {
             var el = $(this);
             if (el.data(pluginName)) {
                 el.data(pluginName).remove();

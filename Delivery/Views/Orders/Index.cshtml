@@ -81,20 +81,20 @@
                     @Html.DisplayFor(modelItem => item.OrderStatus)
                 </td>
                 <td>
-                    @if ((loggedinuser.Role == UserType.DeliveryMan.ToString()) && item.OrderStatus == OrderStatus.New.ToString())
+                    @if ((loggedinuser.Role == UserType.DeliveryMan.ToString()) && (item.OrderStatus == OrderStatus.New.ToString()))
                     {
                         @Html.ActionLink("Activate Delivery", "ChangeStatusToProgress", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"})
                     }
-                    @if ((loggedinuser.Role == UserType.DeliveryMan.ToString()) && item.OrderStatus == OrderStatus.InProgress.ToString())
+                    @if ((loggedinuser.Role == UserType.DeliveryMan.ToString()) && (item.OrderStatus == OrderStatus.InProgress.ToString()))
                     {
                         @Html.ActionLink("Mark as Delivered", "ChangeStatusToDelivered", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"})
                     }
-                    @if ((loggedinuser.Role == UserType.User.ToString()) && item.OrderStatus == OrderStatus.InProgress.ToString())
+                    @if ((loggedinuser.Role == UserType.User.ToString()) && (item.OrderStatus == OrderStatus.InProgress.ToString()))
                     {
                         @Html.ActionLink("Cancel Order", "ChangeStatusToCancelled", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
                     }
                     @Html.ActionLink("Details", "Details", new {id = item.OrderId}, new {@class = "btn btn-xs btn-warning"})
-                    @if ((loggedinuser.Role == UserType.DeliveryMan.ToString()))
+                    @if (loggedinuser.Role == UserType.DeliveryMan.ToString())
                     {
                         @Html.ActionLink("Delete", "Delete", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
                     }

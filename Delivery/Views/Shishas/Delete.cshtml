@@ -5,40 +5,41 @@
     ViewBag.Header = "Shisha";
     ViewBag.Subtitle = "Delete shisha pot";
 }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AvailableQuantity)
-        </dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.AvailableQuantity)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AvailableQuantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SafetyStock)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.AvailableQuantity)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.SafetyStock)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SafetyStock)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitAmount)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SafetyStock)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.UnitAmount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UnitAmount)
-        </dd>
-    </dl>
+    <dd>
+        @Html.DisplayFor(model => model.UnitAmount)
+    </dd>
+</dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-        </div>
-    }
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+    </div>
+}

@@ -1,7 +1,9 @@
-﻿using Microsoft.Owin;
+﻿using Delivery;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Delivery.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
+
 namespace Delivery
 {
     public partial class Startup

@@ -16,7 +16,7 @@
         @Html.HiddenFor(model => model.AvailableQuantity)
         @Html.HiddenFor(model => model.SafetyStock)
         @Html.HiddenFor(model => model.Name)
-        @Html.Hidden("action",action)
+        @Html.Hidden("action", action)
         @if (action == StockAction.Add.ToString())
         {
             <div class="form-group">

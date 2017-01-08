@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Delivery.Data.DataContext.DataContext;
@@ -15,7 +11,7 @@ namespace Delivery.Controllers.DeliveryControllers
 {
     public class AppUsersController : Controller
     {
-        private AppUserDataContext db = new AppUserDataContext();
+        private readonly AppUserDataContext db = new AppUserDataContext();
 
         // GET: AppUsers
         public ActionResult Index()
@@ -27,14 +23,10 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
             return View(appUser);
         }
 
@@ -49,13 +41,15 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile")] AppUser appUser,FormCollection collectedValues)
+        public ActionResult Create(
+            [Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile")] AppUser appUser,
+            FormCollection collectedValues)
         {
             var allUsers = db.AppUsers.ToList();
             var userExist = allUsers.FirstOrDefault(n => n.Email == collectedValues["Email"]);
             if (ModelState.IsValid)
             {
-                appUser.Password = Membership.GeneratePassword(6,0);
+                appUser.Password = Membership.GeneratePassword(6, 0);
                 appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
                 if (userExist != null)
                 {
@@ -77,14 +71,10 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
             return View(appUser);
         }
 
@@ -93,7 +83,9 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile,Password")] AppUser appUser,FormCollection collectedValues)
+        public ActionResult Edit(
+            [Bind(Include = "AppUserId,Firstname,Middlename,Lastname,Email,Mobile,Password")] AppUser appUser,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -111,23 +103,20 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
             return View(appUser);
         }
 
         // POST: AppUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
             TempData["user"] = "The user has been successfully deleted!";
@@ -138,9 +127,7 @@ namespace Delivery.Controllers.DeliveryControllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

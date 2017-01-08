@@ -5,38 +5,38 @@
     ViewBag.Header = "Shisha Flavour";
     ViewBag.Subtitle = "Details of shisha flavour";
 }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AvailableQuantity)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.AvailableQuantity)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AvailableQuantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SafetyStock)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.AvailableQuantity)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.SafetyStock)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SafetyStock)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UnitAmount)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.SafetyStock)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.UnitAmount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UnitAmount)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.UnitAmount)
+    </dd>
 
 
-    </dl>
+</dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FlavourId },new {@class = "btn btn-default"})
+    @Html.ActionLink("Edit", "Edit", new {id = Model.FlavourId}, new {@class = "btn btn-default"})
 </p>

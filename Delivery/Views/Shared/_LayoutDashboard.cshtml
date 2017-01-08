@@ -37,42 +37,42 @@
 
 <body>
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Navigation -->
-        @{
-            Html.RenderPartial("_LayoutNavigation");
-        }
+    <!-- Navigation -->
+    @{
+        Html.RenderPartial("_LayoutNavigation");
+    }
 
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">@ViewBag.Subtitle</h1>
-                </div>
-                <!-- /.col-lg-12 -->
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">@ViewBag.Subtitle</h1>
             </div>
-            @RenderBody()
+            <!-- /.col-lg-12 -->
         </div>
-        <!-- /#page-wrapper -->
-
+        @RenderBody()
     </div>
-    <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="~/Content/ManagementDashboard/vendor/jquery/jquery.min.js"></script>
+    <!-- /#page-wrapper -->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="~/Content/ManagementDashboard/vendor/bootstrap/js/bootstrap.min.js"></script>
+</div>
+<!-- /#wrapper -->
+<!-- jQuery -->
+<script src="~/Content/ManagementDashboard/vendor/jquery/jquery.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="~/Content/ManagementDashboard/vendor/metisMenu/metisMenu.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Content/ManagementDashboard/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="~/Content/ManagementDashboard/vendor/raphael/raphael.min.js"></script>
-    <script src="~/Content/ManagementDashboard/vendor/morrisjs/morris.min.js"></script>
-    <script src="~/Content/ManagementDashboard/data/morris-data.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="~/Content/ManagementDashboard/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="~/Content/ManagementDashboard/dist/js/sb-admin-2.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="~/Content/ManagementDashboard/vendor/raphael/raphael.min.js"></script>
+<script src="~/Content/ManagementDashboard/vendor/morrisjs/morris.min.js"></script>
+<script src="~/Content/ManagementDashboard/data/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="~/Content/ManagementDashboard/dist/js/sb-admin-2.js"></script>
 
 </body>
 

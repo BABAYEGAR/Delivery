@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
 using Delivery.Data.Objects.Entities;
@@ -13,75 +12,73 @@ namespace Delivery.Controllers.DeliveryControllers
 {
     public class ShishasController : Controller
     {
-        private ShishaDataContext _db = new ShishaDataContext();
+        private readonly ShishaDataContext _db = new ShishaDataContext();
 
         // GET: Shishas
         public ActionResult Index()
         {
             return View(_db.Shishas.ToList());
         }
+
         [HttpGet]
-        public ActionResult StockManager(long id,string add,string remove)
+        public ActionResult StockManager(long id, string add, string remove)
         {
             var shisha = _db.Shishas.Find(id);
             if (add != null)
-            {
                 ViewBag.Action = add;
-            }
 
             if (remove != null)
-            {
                 ViewBag.Action = remove;
-            }
             return View(shisha);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StockManager([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha,FormCollection collectedValues)
+        public ActionResult StockManager([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha,
+            FormCollection collectedValues)
         {
-            int quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
-            int quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
-            HttpPostedFileBase image = Request.Files["image"];
-                if (quantityRemoved < shisha.AvailableQuantity)
+            var quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
+            var quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
+            var image = Request.Files["image"];
+            if (quantityRemoved < shisha.AvailableQuantity)
+            {
+                shisha.Image = (image != null) && (image.FileName != "")
+                    ? new FileUploader().UploadFile(image, UploadType.Shisha)
+                    : null;
+                var action = collectedValues["action"];
+                var amount = 0;
+                if (action == StockAction.Add.ToString())
                 {
-                    shisha.Image = image != null && image.FileName != "" ? new FileUploader().UploadFile(image, UploadType.Shisha) : null;
-                    string action = collectedValues["action"];
-                    int amount = 0;
-                    if (action == StockAction.Add.ToString())
-                    {
-                        shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
-                        amount = quantityAdded;
-                    }
-                    if (action == StockAction.Remove.ToString())
-                    {
-                        shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
-                        amount = quantityRemoved;
-                    }
-
-                    _db.Entry(shisha).State = EntityState.Modified;
-                    _db.SaveChanges();
-                    TempData["shisha"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
-                                         " successfully";
-                    TempData["notificationtype"] = NotificationType.Success.ToString();
-                    return RedirectToAction("Index");
+                    shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
+                    amount = quantityAdded;
                 }
-                TempData["shisha"] = "This item is out of stock for the requested quantity!";
-                TempData["notificationtype"] = NotificationType.Danger.ToString();
-            
+                if (action == StockAction.Remove.ToString())
+                {
+                    shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
+                    amount = quantityRemoved;
+                }
+
+                _db.Entry(shisha).State = EntityState.Modified;
+                _db.SaveChanges();
+                TempData["shisha"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
+                                     " successfully";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Index");
+            }
+            TempData["shisha"] = "This item is out of stock for the requested quantity!";
+            TempData["notificationtype"] = NotificationType.Danger.ToString();
+
             return RedirectToAction("Index");
         }
+
         // GET: Shishas/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shisha shisha = _db.Shishas.Find(id);
+            var shisha = _db.Shishas.Find(id);
             if (shisha == null)
-            {
                 return HttpNotFound();
-            }
             return View(shisha);
         }
 
@@ -114,14 +111,10 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shisha shisha = _db.Shishas.Find(id);
+            var shisha = _db.Shishas.Find(id);
             if (shisha == null)
-            {
                 return HttpNotFound();
-            }
             return View(shisha);
         }
 
@@ -147,23 +140,20 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shisha shisha = _db.Shishas.Find(id);
+            var shisha = _db.Shishas.Find(id);
             if (shisha == null)
-            {
                 return HttpNotFound();
-            }
             return View(shisha);
         }
 
         // POST: Shishas/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Shisha shisha = _db.Shishas.Find(id);
+            var shisha = _db.Shishas.Find(id);
             _db.Shishas.Remove(shisha);
             _db.SaveChanges();
             TempData["shisha"] = "You have deleted an item successfully!";
@@ -174,9 +164,7 @@ namespace Delivery.Controllers.DeliveryControllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 _db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

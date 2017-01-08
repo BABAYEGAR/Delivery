@@ -44,7 +44,7 @@
             <th>
                 @Html.DisplayName("Purchase Flag")
             </th>
-                <th>Actions</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -66,14 +66,14 @@
                         <i class="fa fa-flag"></i>
                     }
                 </td>
-                    <td>
-                        @Html.ActionLink("Add Stock", "StockManager", new {id = item.FlavourId, ViewBag.add}, new {@class = "btn btn-xs btn-primary"})
-                        @Html.ActionLink("Remove Stock", "StockManager", new {id = item.FlavourId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
-                        @Html.ActionLink("Details", "StockManager", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-default"})
-                        @Html.ActionLink("Edit", "Edit", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-primary"})
-                        @Html.ActionLink("Delete", "Delete", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-danger"})
-                    </td>
-                
+                <td>
+                    @Html.ActionLink("Add Stock", "StockManager", new {id = item.FlavourId, ViewBag.add}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Remove Stock", "StockManager", new {id = item.FlavourId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Details", "StockManager", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-default"})
+                    @Html.ActionLink("Edit", "Edit", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
+
             </tr>
         }
         </tbody>
