@@ -35,26 +35,17 @@
                 </li>
                 @if (loggedinuser != null)
                 {
-                    if (loggedinuser.Role == UserType.Administrator.ToString())
-                    {
-                        <li>
-                            <a href="@Url.Action("Index", "AppUsers")">Dashboard</a>
-                        </li>
-                    }
-                    if (loggedinuser.Role == UserType.DeliveryMan.ToString())
-                    {
-                        <li>
-                            <a href="@Url.Action("Index", "Orders")">Dashboard</a>
-                        </li>
-                    }
                     <li>
-                        <a href="@Url.Action("Login", "Account")">Log-Out</a>
+                        <a href="@Url.Action("Dashboard", "Home")">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("LogOff", "Account")">Log-Out</a>
                     </li>
                 }
                 else
                 {
                     <li>
-                        <a href="@Url.Action("Login", "Account")">Login</a>
+                        <a href="@Url.Action("Login", "Account")">Log-In</a>
                     </li>
                 }
 

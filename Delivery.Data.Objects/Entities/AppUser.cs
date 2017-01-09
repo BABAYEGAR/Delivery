@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,5 +35,6 @@ namespace Delivery.Data.Objects.Entities
         public string Role { get; set; }
         public string DisplayName
             => Firstname + " " + Lastname;
+        public IEnumerable<Order> Orders { get; set; }
     }
 }

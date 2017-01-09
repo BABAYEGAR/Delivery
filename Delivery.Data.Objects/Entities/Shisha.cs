@@ -8,6 +8,7 @@ namespace Delivery.Data.Objects.Entities
     {
         public long ShishaId { get; set; }
         [Required]
+        [DisplayName("Shisha Name")]
         public string Name { get; set; }
         [DisplayName("Available Quantity")]
         [Required]

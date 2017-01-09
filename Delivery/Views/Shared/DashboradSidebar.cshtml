@@ -19,10 +19,10 @@
                     </div>
                    
                 </li>*@
-                    <li>
-                        <a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-             
+                <li>
+                    <a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+
                 @if (loggedinuser.Role == UserType.Administrator.ToString())
                 {
                     <li>
@@ -56,7 +56,7 @@
                 @if (loggedinuser.Role != UserType.ProcurementOfficer.ToString())
                 {
                     <li>
-                        <a href="#"><i class="fa fa-first-order fa-fw"></i> Orders<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Orders<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             @if (loggedinuser.Role == UserType.User.ToString())
                             {
@@ -64,14 +64,23 @@
                                     <a href="@Url.Action("Create", "Orders")">New Order</a>
                                 </li>
                             }
-                            <li>
-                                <a href="@Url.Action("Index", "Orders")">Orders</a>
-                            </li>
+                            @if (loggedinuser.Role == UserType.User.ToString())
+                            {
+                                <li>
+                                    <a href="@Url.Action("UsersOrder", "Orders")">Orders</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Orders")">Orders</a>
+                                </li>
+                            }
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                 }
-                @if (loggedinuser.Role == UserType.Administrator.ToString() || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
+                @if ((loggedinuser.Role == UserType.Administrator.ToString()) || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
                 {
                     <li>
                         <a href="#"><i class="fa fa-dot-circle-o fa-fw"></i> Shisha Pots<span class="fa arrow"></span></a>
@@ -79,24 +88,24 @@
                             <li>
                                 <a href="@Url.Action("Create", "Shishas")">New Shisha Pot</a>
                             </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Shishas")">Shisha Pots</a>
-                                </li>
-                            
+                            <li>
+                                <a href="@Url.Action("Index", "Shishas")">Shisha Pots</a>
+                            </li>
+
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                 }
-                @if (loggedinuser.Role == UserType.Administrator.ToString() || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
+                @if ((loggedinuser.Role == UserType.Administrator.ToString()) || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
                 {
                     <li>
                         <a href="#"><i class="fa fa-coffee fa-fw"></i> Shisha Flavours<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="@Url.Action("Create", "Flavours")">New Shisha Flavour</a><li>
-                                    <a href="@Url.Action("Index", "Flavours")">Shisha Flavours</a>
-                                </li>
-                            
+                            <a href="@Url.Action("Create", "Flavours")">New Shisha Flavour</a><li>
+                                <a href="@Url.Action("Index", "Flavours")">Shisha Flavours</a>
+                            </li>
+
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>

@@ -115,7 +115,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha)
+        public ActionResult Create([Bind(Include = "ShishaId,UnitAmount,Name,AvailableQuantity,SafetyStock")] Shisha shisha)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +145,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShishaId,Name,AvailableQuantity,SafetyStock")] Shisha shisha)
+        public ActionResult Edit([Bind(Include = "ShishaId,Name,UnitAmount,AvailableQuantity,SafetyStock")] Shisha shisha)
         {
             if (ModelState.IsValid)
             {

@@ -23,18 +23,17 @@ namespace Delivery.Data.Objects.Entities
         public virtual Flavour Flavour  { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [EmailAddress]
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string Name { get; set; }
         public DateTime DateOfOrder { get; set; }
-        [Required]
+        public DateTime DateOrderModified { get; set; }
         public string Mobile { get; set; }
         public string OrderStatus { get; set; }
         public string OrderCode { get; set; }
-        [Required]
-        public string TotalAmount { get; set; }
+        public long? TotalAmount { get; set; }
+        public long? AppUserId { get; set; }
+        [ForeignKey("AppUserId")]
+        public virtual AppUser AppUser { get; set; }
 
     }
 }

@@ -22,7 +22,12 @@ namespace Delivery.Controllers.DeliveryControllers
             var orders = db.Orders.Include(o => o.Flavour).Include(o => o.Shisha);
             return View(orders.ToList());
         }
-
+        public ActionResult UsersOrder()
+        {
+            var loggedinuser = Session["shishaloggedinuser"] as AppUser;
+            var orders = db.Orders.Include(o => o.Flavour).Include(o => o.Shisha);
+            return View("Index",orders.Where(n=>n.AppUserId == loggedinuser.AppUserId).ToList());
+        }
         // GET: Orders/Details/5
         public ActionResult Details(long? id)
         {
@@ -86,58 +91,84 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderId,Name,Email,Mobile,Location,Quantity")] Order order,
+        public ActionResult Create([Bind(Include = "OrderId,Name,Location,Quantity")] Order order,
             FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                var loggedinuser = Session["shishaloggedinuser"] as AppUser;
+                //form collected values
                 var item = typeof(StockItem).GetEnumName(int.Parse(collectedValues["Item"]));
                 var flavourId = Convert.ToInt64(collectedValues["FlavourId"]);
                 var shishaId = Convert.ToInt64(collectedValues["ShishaId"]);
                 var quantity = Convert.ToInt32(collectedValues["Quantity"]);
-                if (item == StockItem.Shisha.ToString())
+
+                //shisha and flavour ids
+                var shisha = dbc.Shishas.Find(shishaId);
+                var flavour = dbd.Flavours.Find(flavourId);
+
+                if (loggedinuser != null)
                 {
-                    order.ShishaId = shishaId;
-                    order.FlavourId = null;
-                    var shisha = db.Shishas.Find(shishaId);
-                    if (quantity < shisha.AvailableQuantity)
+                    if (item == StockItem.Shisha.ToString())
                     {
-                        shisha.AvailableQuantity = shisha.AvailableQuantity - quantity;
-                        dbc.Entry(shisha).State = EntityState.Modified;
-                        dbc.SaveChanges();
+                        order.ShishaId = shishaId;
+                        order.FlavourId = null;
+                        if (quantity < shisha.AvailableQuantity)
+                        {
+                            shisha.AvailableQuantity = shisha.AvailableQuantity - quantity;
+                            dbc.Entry(shisha).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                        }
+                        else
+                        {
+                            TempData["order"] = "This item is out of stock for the requested quantity!";
+                            TempData["notificationtype"] = NotificationType.Danger.ToString();
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
-                    else
+                    if (item == StockItem.Flavour.ToString())
                     {
-                        TempData["order"] = "This item is out of stock for the requested quantity!";
-                        TempData["notificationtype"] = NotificationType.Danger.ToString();
-                        return RedirectToAction("Index", "Home");
+                        order.FlavourId = flavourId;
+                        order.ShishaId = null;
+                        if (quantity < flavour.AvailableQuantity)
+                        {
+                            flavour.AvailableQuantity = flavour.AvailableQuantity - quantity;
+                            dbd.Entry(flavour).State = EntityState.Modified;
+                            dbd.SaveChanges();
+                        }
+                        else
+                        {
+                            TempData["order"] = "This item is out of stock for the requested quantity!";
+                            TempData["notificationtype"] = NotificationType.Danger.ToString();
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
+                    order.OrderStatus = OrderStatus.New.ToString();
+                    order.DateOfOrder = DateTime.Now;
+                    var rnd = new Random();
+                    var randomNumber = rnd.Next(0, 1000000).ToString("D6"); ;
+                    order.OrderCode = "SO" + randomNumber;
+                    order.Name = loggedinuser.DisplayName;
+                    order.DateOrderModified = DateTime.Now;
+                    order.AppUserId = loggedinuser.AppUserId;
+                    order.Email = loggedinuser.Email;
+                    order.Mobile = loggedinuser.Mobile;
+                    if (item == StockItem.Shisha.ToString())
+                    {
+                        order.TotalAmount = shisha.UnitAmount * quantity;
+                    }
+                    if (item == StockItem.Flavour.ToString())
+                    {
+                        order.TotalAmount = flavour.UnitAmount * quantity;
+                    }
+                    db.Orders.Add(order);
+                    db.SaveChanges();
                 }
-                if (item == StockItem.Flavour.ToString())
+                else
                 {
-                    order.FlavourId = flavourId;
-                    order.ShishaId = null;
-                    var flavour = db.Shishas.Find(flavourId);
-                    if (quantity < flavour.AvailableQuantity)
-                    {
-                        flavour.AvailableQuantity = flavour.AvailableQuantity - quantity;
-                        dbd.Entry(flavour).State = EntityState.Modified;
-                        dbd.SaveChanges();
-                    }
-                    else
-                    {
-                        TempData["order"] = "This item is out of stock for the requested quantity!";
-                        TempData["notificationtype"] = NotificationType.Danger.ToString();
-                        return RedirectToAction("Index", "Home");
-                    }
+                    TempData["order"] = "Your session has expired log in and try again!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
                 }
-                order.OrderStatus = OrderStatus.New.ToString();
-                order.DateOfOrder = DateTime.Now;
-                var rnd = new Random();
-                var randomNumber = rnd.Next(1, 9);
-                order.OrderCode = "SO " + randomNumber;
-                db.Orders.Add(order);
-                db.SaveChanges();
                 TempData["order"] = "You have successfully placed an order and it will be attented to soonest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 new MailerDaemon().NewOrder(order);
@@ -172,11 +203,12 @@ namespace Delivery.Controllers.DeliveryControllers
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "OrderId,Location,ShishaId,FlavourId,Quantity,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+                     "OrderId,Location,ShishaId,FlavourId,Quantity,DateOfOrder,FlavourId,ShishaId,OrderCode,OrderStatus,AppUserId,TotalAmount"
              )] Order order)
         {
             if (ModelState.IsValid)
             {
+                order.DateOrderModified = DateTime.Now;
                 db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

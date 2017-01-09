@@ -8,6 +8,7 @@ namespace Delivery.Data.Objects.Entities
     {
         public  long FlavourId { get; set; }
         [Required]
+        [DisplayName("Flavour Name")]
         public string Name { get; set; }
         [DisplayName("Available Quantity")]
         [Required]

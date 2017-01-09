@@ -110,7 +110,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FlavourId,Name,AvailableQuantity,SafetyStock")] Flavour flavour)
+        public ActionResult Create([Bind(Include = "FlavourId,Name,AvailableQuantity,SafetyStock,UnitAmount")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {
@@ -140,7 +140,7 @@ namespace Delivery.Controllers.DeliveryControllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FlavourId,Name.AvailableQuantity,SafetyStock")] Flavour flavour)
+        public ActionResult Edit([Bind(Include = "FlavourId,Name.AvailableQuantity,SafetyStock,UnitAmount")] Flavour flavour)
         {
             if (ModelState.IsValid)
             {

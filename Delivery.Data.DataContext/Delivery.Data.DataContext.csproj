@@ -70,6 +70,14 @@
     <Compile Include="Migrations\201701091812268_seventhMigration.Designer.cs">
       <DependentUpon>201701091812268_seventhMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701092118108_EightMigration.cs" />
+    <Compile Include="Migrations\201701092118108_EightMigration.Designer.cs">
+      <DependentUpon>201701092118108_EightMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701092153000_NinthMigration.cs" />
+    <Compile Include="Migrations\201701092153000_NinthMigration.Designer.cs">
+      <DependentUpon>201701092153000_NinthMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -95,6 +103,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701091812268_seventhMigration.resx">
       <DependentUpon>201701091812268_seventhMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701092118108_EightMigration.resx">
+      <DependentUpon>201701092118108_EightMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701092153000_NinthMigration.resx">
+      <DependentUpon>201701092153000_NinthMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
