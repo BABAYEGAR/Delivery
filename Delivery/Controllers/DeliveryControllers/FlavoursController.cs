@@ -12,12 +12,19 @@ namespace Delivery.Controllers.DeliveryControllers
     public class FlavoursController : Controller
     {
         private readonly FlavourDataContext _db = new FlavourDataContext();
+        private readonly StockLogDataContext _dbc = new StockLogDataContext();
 
         // GET: Flavours
         public ActionResult Index()
         {
             return View(_db.Flavours.ToList());
         }
+        // GET: StockLogs
+        public ActionResult StockLogs(long? id)
+        {
+            return View(_dbc.StockLogs.Where(n=>n.FlavourId == id).OrderByDescending(n=>n.ActionDate));
+        }
+
 
         [HttpGet]
         public ActionResult StockManager(long id, string add, string remove)
@@ -39,6 +46,12 @@ namespace Delivery.Controllers.DeliveryControllers
         {
             var quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
             var quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
+            StockLog stockLog = new StockLog();
+            stockLog.ActionDate = DateTime.Now;
+            stockLog.ShishaId = null;
+            stockLog.ItemName = flavour.Name;
+            stockLog.ItemCategory = StockItem.Flavour.ToString();
+            stockLog.FlavourId = Convert.ToInt64(collectedValues["FlavourId"]);
             if (quantityRemoved < flavour.AvailableQuantity)
             {
                 var action = collectedValues["action"];
@@ -47,15 +60,23 @@ namespace Delivery.Controllers.DeliveryControllers
                 {
                     flavour.AvailableQuantity = flavour.AvailableQuantity + quantityAdded;
                     amount = quantityAdded;
+                    stockLog.Amount = quantityAdded;
+                    stockLog.Action = StockLogAction.Added.ToString();
                 }
                 if (action == StockAction.Remove.ToString())
                 {
                     flavour.AvailableQuantity = flavour.AvailableQuantity - quantityRemoved;
                     amount = quantityRemoved;
+                    stockLog.Amount = quantityRemoved;
+                    stockLog.Action = StockLogAction.Removeed.ToString();
                 }
-
+                //database entry for flavour
                 _db.Entry(flavour).State = EntityState.Modified;
                 _db.SaveChanges();
+
+                //database entry for stock log
+                _dbc.StockLogs.Add(stockLog);
+                _dbc.SaveChanges();
                 TempData["flavour"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
                                       " successfully";
                 TempData["notificationtype"] = NotificationType.Success.ToString();

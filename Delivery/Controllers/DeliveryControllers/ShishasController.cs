@@ -13,13 +13,18 @@ namespace Delivery.Controllers.DeliveryControllers
     public class ShishasController : Controller
     {
         private readonly ShishaDataContext _db = new ShishaDataContext();
+        private readonly StockLogDataContext _dbc = new StockLogDataContext();
 
         // GET: Shishas
         public ActionResult Index()
         {
             return View(_db.Shishas.ToList());
         }
-
+        // GET: StockLogs
+        public ActionResult StockLogs(long? id)
+        {
+            return View(_dbc.StockLogs.Where(n => n.ShishaId == id).OrderByDescending(n => n.ActionDate));
+        }
         [HttpGet]
         public ActionResult StockManager(long id, string add, string remove)
         {
@@ -40,6 +45,13 @@ namespace Delivery.Controllers.DeliveryControllers
             var quantityAdded = Convert.ToInt32(collectedValues["AddValue"]);
             var quantityRemoved = Convert.ToInt32(collectedValues["RemoveValue"]);
             var image = Request.Files["image"];
+            StockLog stockLog = new StockLog();
+            //stock log 
+            stockLog.ActionDate = DateTime.Now;
+            stockLog.ShishaId = Convert.ToInt64(collectedValues["ShishaId"]);
+            stockLog.ItemName = shisha.Name;
+            stockLog.ItemCategory = StockItem.Shisha.ToString();
+            stockLog.FlavourId = null;
             if (quantityRemoved < shisha.AvailableQuantity)
             {
                 shisha.Image = (image != null) && (image.FileName != "")
@@ -47,19 +59,29 @@ namespace Delivery.Controllers.DeliveryControllers
                     : null;
                 var action = collectedValues["action"];
                 var amount = 0;
+             
                 if (action == StockAction.Add.ToString())
                 {
                     shisha.AvailableQuantity = shisha.AvailableQuantity + quantityAdded;
                     amount = quantityAdded;
+                    stockLog.Action = StockLogAction.Added.ToString();
+                    stockLog.Amount = quantityAdded;
+
                 }
                 if (action == StockAction.Remove.ToString())
                 {
                     shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
                     amount = quantityRemoved;
+                    stockLog.Action = StockLogAction.Removeed.ToString();
+                    stockLog.Amount = quantityRemoved;
                 }
-
+                //database entry for shisha
                 _db.Entry(shisha).State = EntityState.Modified;
                 _db.SaveChanges();
+
+                //database entry for stock log
+                _dbc.StockLogs.Add(stockLog);
+                _dbc.SaveChanges();
                 TempData["shisha"] = "You have suucessfully " + action + "ed " + amount + " stock item(s)" +
                                      " successfully";
                 TempData["notificationtype"] = NotificationType.Success.ToString();

@@ -19,5 +19,6 @@ namespace Delivery.Data.Objects.Entities
         [DisplayName("Unit Price")]
         public long UnitAmount { get; set; }
         public IEnumerable<Order> Order { get; set; }
+        public IEnumerable<StockLog> StockLogs { get; set; }
     }
 }

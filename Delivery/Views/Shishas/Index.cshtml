@@ -68,15 +68,25 @@
 
                 </td>
                 <td>
-                    <a class="btn btn-xs btn-primary" href="@Url.Action("StockManager", new RouteValueDictionary(
-                                                                new {id = item.ShishaId, ViewBag.add}))">
-                        Add Stock
-                    </a>
-                    @Html.ActionLink("Remove Stock", "StockManager", new {id = item.ShishaId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
-                    @Html.ActionLink("Details", "Details", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-default"})
+                    @if (loggedinuser.Role == UserType.ProcurementOfficer.ToString())
+                    {
+                        <a class="btn btn-xs btn-primary" href="@Url.Action("StockManager", new RouteValueDictionary(
+                                                                    new {id = item.ShishaId, ViewBag.add}))">
+                            Add Stock
+                        </a>
 
-                    @Html.ActionLink("Edit", "Edit", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-danger"})
+                        @Html.ActionLink("Remove Stock", "StockManager", new {id = item.ShishaId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
+                    }
+                    @if (loggedinuser.Role != UserType.User.ToString())
+                    {
+                        @Html.ActionLink("Stock Log", "StockLogs", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-warning"})
+                    }
+                    @Html.ActionLink("Details", "Details", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-default"})
+                    @if (loggedinuser.Role == UserType.Administrator.ToString())
+                    {
+    @Html.ActionLink("Edit", "Edit", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-primary"})
+    @Html.ActionLink("Delete", "Delete", new {id = item.ShishaId}, new {@class = "btn btn-xs btn-danger"})
+}
                 </td>
             </tr>
         }

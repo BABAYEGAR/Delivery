@@ -65,9 +65,15 @@ namespace Delivery.Controllers
             {
                 Session["shishaloggedinuser"] = appuser;
                 if (appuser.Role == UserType.Administrator.ToString())
-                    return RedirectToAction("AdminHome", "Home");
+                    return RedirectToAction("Dashboard", "Home");
                 if (appuser.Role == UserType.DeliveryMan.ToString())
-                    return RedirectToAction("Index", "Orders");
+                    return RedirectToAction("Dashboard", "Home");
+                if (appuser.Role == UserType.ProcurementOfficer.ToString())
+                    return RedirectToAction("Dashboard", "Home");
+                if (appuser.Role == UserType.Accountant.ToString())
+                    return RedirectToAction("Dashboard", "Home");
+                if (appuser.Role == UserType.User.ToString())
+                    return RedirectToAction("Dashboard", "Home");
             }
             else
             {

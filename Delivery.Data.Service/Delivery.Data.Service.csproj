@@ -47,6 +47,7 @@
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Enums\NotificationType.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
+    <Compile Include="Enums\StockLogAction.cs" />
     <Compile Include="Enums\StockAction.cs" />
     <Compile Include="Enums\StockItem.cs" />
     <Compile Include="Enums\UploadType.cs" />

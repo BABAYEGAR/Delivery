@@ -1,0 +1,77 @@
+﻿@using Delivery.Data.Objects.Entities
+@using Delivery.Data.Service.Enums
+@model IEnumerable<Delivery.Data.Objects.Entities.StockLog>
+
+@{
+    Layout = "../Shared/_LayoutTables.cshtml";
+    ViewBag.Title = "Index";
+    ViewBag.Header = "Stock Log";
+    ViewBag.Subtitle = "Track List of items in the inventory";
+
+    var loggedinuser = Session["shishaloggedinuser"] as AppUser;
+}
+@if (TempData["log"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable">@TempData["log"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable">@TempData["log"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable">@TempData["log"]</div>
+    }
+}
+@if (loggedinuser != null)
+{
+    <table class="table table-condensed" id="dataTables-example">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActionDate)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCategory)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+}

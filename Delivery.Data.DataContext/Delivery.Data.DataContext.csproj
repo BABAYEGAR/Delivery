@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext\AppUserDataContext.cs" />
+    <Compile Include="DataContext\StockLogDataContext.cs" />
     <Compile Include="DataContext\ShishaDataContext.cs" />
     <Compile Include="DataContext\FlavourDataContext.cs" />
     <Compile Include="DataContext\OrderDataContext.cs" />
@@ -64,6 +65,10 @@
     <Compile Include="Migrations\201701072328054_FourthMigration.cs" />
     <Compile Include="Migrations\201701072328054_FourthMigration.Designer.cs">
       <DependentUpon>201701072328054_FourthMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701091812268_seventhMigration.cs" />
+    <Compile Include="Migrations\201701091812268_seventhMigration.Designer.cs">
+      <DependentUpon>201701091812268_seventhMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701072328054_FourthMigration.resx">
       <DependentUpon>201701072328054_FourthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701091812268_seventhMigration.resx">
+      <DependentUpon>201701091812268_seventhMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

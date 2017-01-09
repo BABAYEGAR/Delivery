@@ -67,11 +67,22 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Add Stock", "StockManager", new {id = item.FlavourId, ViewBag.add}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Remove Stock", "StockManager", new {id = item.FlavourId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
+                    @if (loggedinuser.Role == UserType.ProcurementOfficer.ToString())
+                    {
+                        @Html.ActionLink("Add Stock", "StockManager", new {id = item.FlavourId, ViewBag.add}, new {@class = "btn btn-xs btn-primary"})
+                        @Html.ActionLink("Remove Stock", "StockManager", new {id = item.FlavourId, ViewBag.remove}, new {@class = "btn btn-xs btn-danger"})
+                    }
+                    @if (loggedinuser.Role != UserType.User.ToString())
+                    {
+                        @Html.ActionLink("Stock Log", "StockLogs", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-warning"})
+                    }
+
                     @Html.ActionLink("Details", "StockManager", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Edit", "Edit", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-danger"})
+                    @if (loggedinuser.Role == UserType.Administrator.ToString())
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-primary"})
+                        @Html.ActionLink("Delete", "Delete", new {id = item.FlavourId}, new {@class = "btn btn-xs btn-danger"})
+                    }
                 </td>
 
             </tr>

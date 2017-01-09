@@ -22,7 +22,7 @@
                 @if (loggedinuser.Role == UserType.Administrator.ToString())
                 {
                     <li>
-                        <a href="@Url.Action("AdminHome", "Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                 }
                 @if (loggedinuser.Role == UserType.ProcurementOfficer.ToString())
@@ -91,7 +91,7 @@
                         <!-- /.nav-second-level -->
                     </li>
                 }
-                @if (loggedinuser.Role == UserType.Administrator.ToString())
+                @if (loggedinuser.Role == UserType.Administrator.ToString() || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
                 {
                     <li>
                         <a href="#"><i class="fa fa-dot-circle-o fa-fw"></i> Shisha Pots<span class="fa arrow"></span></a>
@@ -99,24 +99,24 @@
                             <li>
                                 <a href="@Url.Action("Create", "Shishas")">New Shisha Pot</a>
                             </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Shishas")">Shisha Pots</a>
-                            </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Shishas")">Shisha Pots</a>
+                                </li>
+                            
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                 }
-                @if (loggedinuser.Role == UserType.Administrator.ToString())
+                @if (loggedinuser.Role == UserType.Administrator.ToString() || (loggedinuser.Role == UserType.ProcurementOfficer.ToString()))
                 {
                     <li>
                         <a href="#"><i class="fa fa-coffee fa-fw"></i> Shisha Flavours<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="@Url.Action("Create", "Flavours")">New Shisha Flavour</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Index", "Flavours")">Shisha Flavours</a>
-                            </li>
+                                <a href="@Url.Action("Create", "Flavours")">New Shisha Flavour</a><li>
+                                    <a href="@Url.Action("Index", "Flavours")">Shisha Flavours</a>
+                                </li>
+                            
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>

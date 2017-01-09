@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Delivery.Data.DataContext.DataContext;
 
 namespace Delivery.Controllers
 {
@@ -23,9 +24,9 @@ namespace Delivery.Controllers
             return View();
         }
 
-        public ActionResult AdminHome()
+        public ActionResult Dashboard()
         {
-            return View();
+            return View("Dashboard");
         }
     }
 }

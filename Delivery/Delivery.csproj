@@ -582,13 +582,15 @@
     <Content Include="Views\AppUsers\Edit.cshtml" />
     <Content Include="Views\AppUsers\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutLandingPage.cshtml" />
-    <Content Include="Views\Home\AdminHome.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Shared\DashboradSidebar.cshtml" />
     <Content Include="Views\Shared\_LayoutForms.cshtml" />
     <Content Include="Views\Shared\_LayoutNavigation.cshtml" />
     <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
     <Content Include="Views\Shared\_LayoutTables.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Flavours\StockLogs.cshtml" />
+    <Content Include="Views\Shishas\StockLogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

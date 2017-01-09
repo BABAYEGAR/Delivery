@@ -14,6 +14,7 @@ namespace Delivery.Data.Service.Enums
         DeliveryMan,
         [Display(Name = "Procurement Officer")]
         ProcurementOfficer,
+        Accountant,
         User
     }
 }

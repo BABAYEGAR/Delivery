@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\StockLog.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Flavour.cs" />
     <Compile Include="Entities\Shisha.cs" />
