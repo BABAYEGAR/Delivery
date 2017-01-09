@@ -9,6 +9,6 @@ namespace Delivery.Data.Service.Enums
     public enum StockLogAction
     {
         Added,
-        Removeed
+        Removed
     }
 }

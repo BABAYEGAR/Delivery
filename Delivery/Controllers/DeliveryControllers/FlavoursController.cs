@@ -68,7 +68,7 @@ namespace Delivery.Controllers.DeliveryControllers
                     flavour.AvailableQuantity = flavour.AvailableQuantity - quantityRemoved;
                     amount = quantityRemoved;
                     stockLog.Amount = quantityRemoved;
-                    stockLog.Action = StockLogAction.Removeed.ToString();
+                    stockLog.Action = StockLogAction.Removed.ToString();
                 }
                 //database entry for flavour
                 _db.Entry(flavour).State = EntityState.Modified;

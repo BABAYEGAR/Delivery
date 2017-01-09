@@ -72,7 +72,7 @@ namespace Delivery.Controllers.DeliveryControllers
                 {
                     shisha.AvailableQuantity = shisha.AvailableQuantity - quantityRemoved;
                     amount = quantityRemoved;
-                    stockLog.Action = StockLogAction.Removeed.ToString();
+                    stockLog.Action = StockLogAction.Removed.ToString();
                     stockLog.Amount = quantityRemoved;
                 }
                 //database entry for shisha
