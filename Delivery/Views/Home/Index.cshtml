@@ -3,7 +3,7 @@
 @using Delivery.Data.Service.Enums
 @{
     ViewBag.Title = "Home";
-    Layout = "/Views/Shared/_LayoutLandingPage.cshtml";
+    Layout = "../../Views/Shared/_LayoutLandingPage.cshtml";
 
     var db = new ShishaDataContext();
     var shisha = db.Shishas.ToList();
@@ -77,7 +77,16 @@
             <h1 id="homeHeading">Order your wonderful shisha pots and shisha flavours</h1>
             <hr>
             <p>Order shisha makes you realise your dreams, order your shisha to your doorstep</p>
-            <a href="@Url.Action("Create", "Orders")" class="btn btn-default btn-xl page-scroll">Order</a>
+            @if (loggedinuser != null)
+            {
+                <a href="@Url.Action("Create", "Orders")" class="btn btn-default btn-xl page-scroll">Order</a>
+
+            }
+            else
+            {
+                <a href="@Url.Action("Create", "Orders",new {home = true})" class="btn btn-default btn-xl page-scroll">Order</a>
+
+            }
 
         </div>
     </div>

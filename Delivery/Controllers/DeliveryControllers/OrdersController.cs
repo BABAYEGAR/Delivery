@@ -79,10 +79,20 @@ namespace Delivery.Controllers.DeliveryControllers
         }
 
         // GET: Orders/Create
-        public ActionResult Create()
+        public ActionResult Create(bool? home)
         {
+            var loggedinuser = Session["shishaloggedinuser"] as AppUser;
             ViewBag.FlavourId = new SelectList(db.Flavours, "FlavourId", "Name");
             ViewBag.ShishaId = new SelectList(db.Shishas, "ShishaId", "Name");
+            if (home == true )
+            {
+                if (loggedinuser == null)
+                {
+                    TempData["order"] = "Please login to place your order!";
+                    TempData["notificationtype"] = NotificationType.Danger.ToString();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
 
