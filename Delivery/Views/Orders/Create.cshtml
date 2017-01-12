@@ -9,70 +9,78 @@
 @section css{
     <link href="~/Content/select2.min.css" rel="stylesheet"/>
 }
-@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6" id="orderForm">
+    <!--REVIEW ORDER-->
+    @{ Html.RenderPartial("OrderReview",Model); }
+    <!--REVIEW ORDER END-->
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <strong>Location:</strong>
-        </div>
-        <div class="col-md-6">
-            @Html.EditorFor(model => model.Location, new {htmlAttributes = new {@class = "form-control"}})
-            @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <strong>Available Item:</strong>
-        </div>
-        <div class="col-md-6">
-            @Html.DropDownList("Item", EnumHelper.GetSelectList(typeof(StockItem)), "select an item to order", new {@class = "form-control select-dropdown", id = "item"})
-        </div>
-    </div>
-    <div class="form-group" id="shishaDiv">
-        <div class="col-md-12">
-            <strong>Available Shisha:</strong>
-        </div>
-        <div class="col-md-6">
-            @Html.DropDownList("ShishaId", null, new {@class = "form-control select-dropdown"})
-            @Html.ValidationMessageFor(model => model.ShishaId, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="form-group" id="flavourDiv">
-        <div class="col-md-12">
-            <strong>Available Flavour:</strong>
-        </div>
-        <div class="col-md-6">
-            @Html.DropDownList("FlavourId", null, new {@class = "form-control select-dropdown"}) @Html.ValidationMessageFor(model => model.FlavourId, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <strong>Quantity:</strong>
-        </div>
-        <div class="col-md-6">
-            @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "form-control"}})
-            @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-10 col-md-12">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
-    </div>
-}
+    @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new {@class = "text-danger"})
 
+        <div class="form-group">
+            <div class="col-md-12">
+                <strong>Location:</strong>
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Location, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <strong>Available Item:</strong>
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("Item", EnumHelper.GetSelectList(typeof(StockItem)), "select an item to order", new {@class = "form-control select-dropdown", id = "item"})
+            </div>
+        </div>
+        <div class="form-group" id="shishaDiv">
+            <div class="col-md-12">
+                <strong>Available Shisha:</strong>
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("ShishaId", null, new {@class = "form-control select-dropdown", id = "shisha"})
+                @Html.ValidationMessageFor(model => model.ShishaId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group" id="flavourDiv">
+            <div class="col-md-12">
+                <strong>Available Flavour:</strong>
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("FlavourId", null, new {@class = "form-control select-dropdown"}) @Html.ValidationMessageFor(model => model.FlavourId, "", new {@class = "text-danger", id = "flavour"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <strong>Quantity:</strong>
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Order" class="btn btn-primary"/>
+            </div>
+        </div>
+    }
+</div>
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/select2.min.js"></script>
     <script>
         $(document)
             .ready(function() {
-
                 // Init select2 for dropdown select
                 $('.select-dropdown').select2();
+
+
                 $("#shishaDiv").hide(0);
                 $("#flavourDiv").hide(0);
                 var item = $("#item");
@@ -81,9 +89,29 @@
                         shisha = $("#shishaDiv"),
                         flavour = $("#flavourDiv");
                     if (sel === "0") {
+
+                        $(function() {
+                            setInterval(function() {
+                                    $('#orderForm')
+                                        .load('@Url.Action("ReloadOrderView", "Home", new {id  = Model})');
+                                },
+                                1000);
+
+                        });
                         flavour.hide(0);
                         shisha.show(100);
+
                     } else if (sel === "1") {
+
+                        $(function() {
+                            setInterval(function() {
+
+                                    $('#orderForm')
+                                        .load('@Url.Action("ReloadOrderView", "Home", new {id  = Model})');
+                                },
+                                1000);
+
+                        });
                         shisha.hide(0);
                         flavour.show(100);
                     } else {
@@ -91,6 +119,7 @@
                         flavour.hide(0);
                     }
                 });
+
             });
     </script>
 }

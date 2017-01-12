@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Delivery.Data.DataContext.DataContext;
+using Delivery.Data.Objects.Entities;
 
 namespace Delivery.Controllers
 {
@@ -27,6 +28,11 @@ namespace Delivery.Controllers
         public ActionResult Dashboard()
         {
             return View("Dashboard");
+        }
+        [HttpGet]
+        public ActionResult ReloadOrderView(Order id)
+        {
+            return PartialView("OrderReview", id);
         }
     }
 }
