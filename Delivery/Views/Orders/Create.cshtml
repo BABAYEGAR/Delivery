@@ -89,29 +89,10 @@
                         shisha = $("#shishaDiv"),
                         flavour = $("#flavourDiv");
                     if (sel === "0") {
-
-                        $(function() {
-                            setInterval(function() {
-                                    $('#orderForm')
-                                        .load('@Url.Action("ReloadOrderView", "Home", new {id  = Model})');
-                                },
-                                1000);
-
-                        });
                         flavour.hide(0);
                         shisha.show(100);
 
                     } else if (sel === "1") {
-
-                        $(function() {
-                            setInterval(function() {
-
-                                    $('#orderForm')
-                                        .load('@Url.Action("ReloadOrderView", "Home", new {id  = Model})');
-                                },
-                                1000);
-
-                        });
                         shisha.hide(0);
                         flavour.show(100);
                     } else {

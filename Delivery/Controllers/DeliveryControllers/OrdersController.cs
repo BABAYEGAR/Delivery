@@ -22,12 +22,14 @@ namespace Delivery.Controllers.DeliveryControllers
             var orders = db.Orders.Include(o => o.Flavour).Include(o => o.Shisha);
             return View(orders.ToList());
         }
+
         public ActionResult UsersOrder()
         {
             var loggedinuser = Session["shishaloggedinuser"] as AppUser;
             var orders = db.Orders.Include(o => o.Flavour).Include(o => o.Shisha);
-            return View("Index",orders.Where(n=>n.AppUserId == loggedinuser.AppUserId).ToList());
+            return View("Index", orders.Where(n => n.AppUserId == loggedinuser.AppUserId).ToList());
         }
+
         // GET: Orders/Details/5
         public ActionResult Details(long? id)
         {
@@ -78,21 +80,58 @@ namespace Delivery.Controllers.DeliveryControllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CheckOut(FormCollection collectedValues)
+        {
+            var shisha = Session["shisha"] as Shisha;
+            var flavour = Session["flavour"] as Flavour;
+            var order = Session["order"] as Order;
+            if (shisha != null)
+            {
+                dbc.Entry(shisha).State = EntityState.Modified;
+                dbc.SaveChanges();
+            }
+            if (flavour != null)
+            {
+                dbd.Entry(flavour).State = EntityState.Modified;
+                dbd.SaveChanges();
+            }
+
+            db.Orders.Add(order);
+            db.SaveChanges();
+
+            TempData["order"] = "You have successfully placed an order and it will be attented to soonest!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            new MailerDaemon().NewOrder(order);
+            Session["shisha"] = null;
+            Session["flavour"] = null;
+            Session["order"] = null;
+            ViewBag.FlavourId = new SelectList(db.Flavours.Where(n => n.AvailableQuantity > 0), "FlavourId", "Name",
+                order?.FlavourId);
+            ViewBag.ShishaId = new SelectList(db.Shishas.Where(n => n.AvailableQuantity > 0), "ShishaId", "Name",
+                order?.ShishaId);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: Orders/Create
         public ActionResult Create(bool? home)
         {
             var loggedinuser = Session["shishaloggedinuser"] as AppUser;
             ViewBag.FlavourId = new SelectList(db.Flavours, "FlavourId", "Name");
             ViewBag.ShishaId = new SelectList(db.Shishas, "ShishaId", "Name");
-            if (home == true )
-            {
+            if (home == true)
                 if (loggedinuser == null)
                 {
                     TempData["order"] = "Please login to place your order!";
                     TempData["notificationtype"] = NotificationType.Danger.ToString();
                     return RedirectToAction("Index", "Home");
                 }
-            }
             return View();
         }
 
@@ -126,8 +165,7 @@ namespace Delivery.Controllers.DeliveryControllers
                         if (quantity < shisha.AvailableQuantity)
                         {
                             shisha.AvailableQuantity = shisha.AvailableQuantity - quantity;
-                            dbc.Entry(shisha).State = EntityState.Modified;
-                            dbc.SaveChanges();
+                            Session["shisha"] = shisha;
                         }
                         else
                         {
@@ -143,8 +181,7 @@ namespace Delivery.Controllers.DeliveryControllers
                         if (quantity < flavour.AvailableQuantity)
                         {
                             flavour.AvailableQuantity = flavour.AvailableQuantity - quantity;
-                            dbd.Entry(flavour).State = EntityState.Modified;
-                            dbd.SaveChanges();
+                            Session["flavour"] = flavour;
                         }
                         else
                         {
@@ -156,7 +193,8 @@ namespace Delivery.Controllers.DeliveryControllers
                     order.OrderStatus = OrderStatus.New.ToString();
                     order.DateOfOrder = DateTime.Now;
                     var rnd = new Random();
-                    var randomNumber = rnd.Next(0, 1000000).ToString("D6"); ;
+                    var randomNumber = rnd.Next(0, 1000000).ToString("D6");
+                    ;
                     order.OrderCode = "SO" + randomNumber;
                     order.Name = loggedinuser.DisplayName;
                     order.DateOrderModified = DateTime.Now;
@@ -164,31 +202,19 @@ namespace Delivery.Controllers.DeliveryControllers
                     order.Email = loggedinuser.Email;
                     order.Mobile = loggedinuser.Mobile;
                     if (item == StockItem.Shisha.ToString())
-                    {
-                        order.TotalAmount = shisha.UnitAmount * quantity;
-                    }
+                        order.TotalAmount = shisha.UnitAmount*quantity;
                     if (item == StockItem.Flavour.ToString())
-                    {
-                        order.TotalAmount = flavour.UnitAmount * quantity;
-                    }
-                    db.Orders.Add(order);
-                    db.SaveChanges();
+                        order.TotalAmount = flavour.UnitAmount*quantity;
+                    Session["order"] = order;
+                    return RedirectToAction("CheckOut", "Orders");
                 }
                 else
                 {
                     TempData["order"] = "Your session has expired log in and try again!";
                     TempData["notificationtype"] = NotificationType.Success.ToString();
                 }
-                TempData["order"] = "You have successfully placed an order and it will be attented to soonest!";
-                TempData["notificationtype"] = NotificationType.Success.ToString();
-                new MailerDaemon().NewOrder(order);
-                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.FlavourId = new SelectList(db.Flavours.Where(n => n.AvailableQuantity > 0), "FlavourId", "Name",
-                order.FlavourId);
-            ViewBag.ShishaId = new SelectList(db.Shishas.Where(n => n.AvailableQuantity > 0), "ShishaId", "Name",
-                order.ShishaId);
             return View(order);
         }
 
