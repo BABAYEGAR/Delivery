@@ -77,7 +77,7 @@
                     {
                         @Html.ActionLink("Mark as Delivered", "ChangeStatusToDelivered", new {id = item.OrderId}, new {@class = "btn btn-xs btn-primary"})
                     }
-                    @if ((loggedinuser.Role == UserType.User.ToString()) && (item.OrderStatus == OrderStatus.InProgress.ToString()))
+                    @if ((loggedinuser.Role == UserType.User.ToString()) && (item.AppUserId == loggedinuser.AppUserId))
                     {
                         @Html.ActionLink("Cancel Order", "ChangeStatusToCancelled", new {id = item.OrderId}, new {@class = "btn btn-xs btn-danger"})
                     }

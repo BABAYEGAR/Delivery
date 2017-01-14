@@ -72,6 +72,27 @@ namespace Delivery.Controllers.DeliveryControllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var order = db.Orders.Find(id);
+            var shisha = dbc.Shishas.Find(order.ShishaId);
+            var flavour = dbd.Flavours.Find(order.FlavourId);
+
+            //return ordered quantity to inventory
+            if (shisha != null) shisha.AvailableQuantity = shisha.AvailableQuantity + order.Quantity;
+            if (flavour != null) flavour.AvailableQuantity = flavour.AvailableQuantity + order.Quantity;
+
+            if (shisha != null)
+            {
+                dbc.Entry(shisha).State = EntityState.Modified;
+                dbc.SaveChanges();
+
+               
+            }
+            if (flavour != null)
+            {
+                dbd.Entry(flavour).State = EntityState.Modified;
+                dbd.SaveChanges();
+            }
+
+            //modify order object
             order.OrderStatus = OrderStatus.Cancelled.ToString();
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
