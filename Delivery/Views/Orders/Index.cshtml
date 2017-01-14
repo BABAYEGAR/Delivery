@@ -54,10 +54,11 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Flavour.Name)
+                    @(item.FlavourId != null ? Html.DisplayFor(modelItem => item.Flavour.Name) : Html.Display("N/A"))
+
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Shisha.Name)
+                    @(item.ShishaId != null ? Html.DisplayFor(modelItem => item.Shisha.Name) : Html.Display("N/A"))
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderCode)
